@@ -44,4 +44,6 @@
           - python3-neovim
           - htop
           - docker
+          - git
+          - zsh
         state: present

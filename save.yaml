@@ -1,0 +1,18 @@
+- name: Add files, commit, and push changes to Git repository
+  hosts: localhost # You can replace 'localhost' with your target host or group
+
+  tasks:
+    - name: Save nvim
+      block:
+        - name: Copy config
+          ansible.builtin.shell:
+            cmd: |
+              #/bin/bash
+              cp -r $HOME/.config/nvim/ ./packages/nvim/
+              git add .
+              git commit -m "Update NVIM"
+
+    #- name: Push changes to the Git repository
+    #  ansible.builtin.git:
+    #    repo: /path/to/your/git/repository
+    #    push: yes

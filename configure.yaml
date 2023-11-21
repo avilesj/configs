@@ -1,10 +1,7 @@
 - name: Configure packages
   hosts: localhost
-  #become: yes
-  #become_method: su
   tasks:
     - name: Configure NVIM
       ansible.builtin.copy:
-        src: ./packages/nvim/
+        src: ./packages/nvim
         dest: $HOME/.config/
-        recurse: yes

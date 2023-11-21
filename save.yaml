@@ -3,14 +3,22 @@
 
   tasks:
     - name: Save nvim
-      block:
-        - name: Copy config
-          ansible.builtin.shell:
-            cmd: |
-              #/bin/bash
-              cp -r $HOME/.config/nvim/ ./packages/nvim/
-              git add .
-              git commit -m "Update NVIM"
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          cp -r $HOME/.config/nvim/ $CONFIGS_NVIM_DIR/
+          git add --ignore-errors $CONFIGS_NVIM_DIR/
+    - name: Dotfiles
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          cp $HOME/.zshenv $CONFIGS_DOTFILES_DIR/
+          git add $CONFIGS_DOTFILES_DIR/
+    - name: Commit and push
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          git commit -m "Updated packages: $(git diff --staged --name-only packages/ | cut -d '/' -f 2 | awk '{printf "%s%s",sep,$0; sep=", "} END {print ""}')"
 
     #- name: Push changes to the Git repository
     #  ansible.builtin.git:

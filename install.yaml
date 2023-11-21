@@ -47,3 +47,7 @@
           - git
           - zsh
         state: present
+    - name: Install oh my zsh
+      ansible.builtin.shell:
+        cmd: |
+          sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

@@ -5,3 +5,19 @@
       ansible.builtin.copy:
         src: ./packages/nvim
         dest: $HOME/.config/
+    - name: Configure dotfiles
+      ansible.builtin.copy:
+        src: ./packages/dotfiles/.zshenv
+        dest: $HOME/
+    - name: Configure Oh my Zsh (Mac)
+      when: ansible_distribution == 'MacOSX'
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sed -i '' '/ZSH_THEME/d' $HOME/.zshrc
+    - name: Configure Oh my Zsh (Linux)
+      when: ansible_distribution == 'Debian'
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sed -i '/ZSH_THEME/d' $HOME/.zshrc

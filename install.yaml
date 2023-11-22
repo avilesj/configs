@@ -49,6 +49,12 @@
           - zsh
         state: present
     - name: Install oh my zsh
+      register: oh_my_zsh
+      changed_when: oh_my_zsh.stdout != "False"
       ansible.builtin.shell:
         cmd: |
-          sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+          if [ -z ${ZSH+x} ]; then 
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            echo "True"
+          fi
+            echo "False"

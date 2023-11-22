@@ -8,6 +8,12 @@
           #/bin/bash
           cp -r $HOME/.config/nvim/ $CONFIGS_NVIM_DIR/
           git add --ignore-errors $CONFIGS_NVIM_DIR/
+    - name: Save Alacritty
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          cp -r $HOME/.config/alacritty/ $CONFIGS_ALACRITTY_DIR/
+          git add --ignore-errors $CONFIGS_ALACRITTY_DIR/
     - name: Dotfiles
       ansible.builtin.shell:
         cmd: |

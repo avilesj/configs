@@ -15,10 +15,19 @@
           cp $HOME/.zshenv $CONFIGS_DOTFILES_DIR/
           git add $CONFIGS_DOTFILES_DIR/
     - name: Commit and push
+      register: commit
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          git commit -m "Updated packages: $(git diff --staged --name-only packages/ | cut -d '/' -f 2 | awk '{printf "%s%s",sep,$0; sep=", "} END {print ""}')"
+          git commit -m "Updated packages: $(git diff --staged --name-only packages/ | cut -d '/' -f 2 | sort -u | awk '{printf "%s%s",sep,$0; sep=", "} END {print ""}')"
+    - name: Echo commit
+      debug:
+        var: item
+      loop:
+        - "Return Code: {{ commit.rc }}"
+        - "Standard Output: {{ commit.stdout }}"
+        - "Standard Error: {{ commit.stderr }}"
+        - "Task Changed: {{ commit.changed }}"
 
     #- name: Push changes to the Git repository
     #  ansible.builtin.git:

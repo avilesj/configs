@@ -16,6 +16,7 @@
               - k0sctl
               - k9s
               - ripgrep
+              - kubectl
               - fd
             state: present
 
@@ -39,14 +40,20 @@
             state: present
     - name: Ensure packages
       when: ansible_distribution == 'Debian'
+      become: yes
       apt:
         name:
           - neovim
           - python3-neovim
           - htop
           - docker
+          - docker.io
+          - docker-compose
           - git
           - zsh
+          - alacritty
+          - fd-find
+          - ripgrep
         state: present
     - name: Install oh my zsh
       register: oh_my_zsh

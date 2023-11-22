@@ -10,6 +10,7 @@
           community.general.homebrew:
             name:
               - nvim
+              - tmux
               - tree-sitter
               - wget
               - lazygit
@@ -51,6 +52,7 @@
           - docker-compose
           - git
           - zsh
+          - tmux
           - alacritty
           - fd-find
           - ripgrep
@@ -65,3 +67,7 @@
             echo "True"
           fi
             echo "False"
+    - name: TPM (Tmux)
+      ansible.builtin.shell:
+        cmd: |
+          git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

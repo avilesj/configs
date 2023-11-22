@@ -19,6 +19,7 @@
         cmd: |
           #/bin/bash
           cp $HOME/.zshenv $CONFIGS_DOTFILES_DIR/
+          cp $HOME/.tmux.conf $CONFIGS_DOTFILES_DIR/
           git add $CONFIGS_DOTFILES_DIR/
     - name: Commit and push
       register: commit

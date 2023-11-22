@@ -70,4 +70,5 @@
     - name: TPM (Tmux)
       ansible.builtin.shell:
         cmd: |
+          rm -rf ~/.tmux
           git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

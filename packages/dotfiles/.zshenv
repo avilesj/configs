@@ -32,6 +32,6 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 export PATH=$HOME/.local/bin:$PATH #for fdfind
 export CONFIGS_DIR=$HOME/Dev/configs/
 export CONFIGS_PKGS_DIR=$HOME/Dev/configs/packages/
-export CONFIGS_DOTFILES_DIR=$HOME/Dev/configs/packages/
+export CONFIGS_DOTFILES_DIR=$HOME/Dev/configs/packages/dotfiles/
 export CONFIGS_NVIM_DIR=$HOME/Dev/configs/packages/nvim/
 export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/

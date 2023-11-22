@@ -11,10 +11,11 @@
         dest: $HOME/.config/
     - name: Configure dotfiles
       ansible.builtin.copy:
-        src:
-          - ./packages/dotfiles/.zshenv
-          - ./packages/dotfiles/.tmux.conf
+        src: "{{ item }}"
         dest: $HOME/
+      loop:
+        - ./packages/dotfiles/.zshenv
+        - ./packages/dotfiles/.tmux.conf
     - name: Configure Oh my Zsh (Mac)
       when: ansible_distribution == 'MacOSX'
       ansible.builtin.shell:

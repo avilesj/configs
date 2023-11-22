@@ -2,7 +2,7 @@
 alias k=kubectl
 alias vim=nvim
 # ZSH
-ZSH_THEME="xiong-chiamiov-plus"
+ZSH_THEME="gnzh"
 ## Vim mode
 bindkey -v
 ## Keybinds

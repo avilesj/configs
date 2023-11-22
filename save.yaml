@@ -26,7 +26,9 @@
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          git commit -m "Updated packages: $(git diff --staged --name-only packages/ | cut -d '/' -f 2 | sort -u | awk '{printf "%s%s",sep,$0; sep=", "} END {print ""}')"
+          if [[ -n $(git status -s packages/) ]]; then
+            git commit -m "Updated packages: $(git diff --staged --name-only packages/ | cut -d '/' -f 2 | sort -u | awk '{printf "%s%s",sep,$0; sep=", "} END {print ""}')"
+          fi
     #- name: Push changes to the Git repository
     #  ansible.builtin.git:
     #    repo: /path/to/your/git/repository

@@ -34,6 +34,7 @@
               - syncthing
               - vlc
               - vscodium
+              - alacritty
               - wireshark
             state: present
     - name: Ensure packages

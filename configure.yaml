@@ -23,7 +23,7 @@
           #/bin/bash
           sed -i '' '/ZSH_THEME/d' $HOME/.zshrc
           # VI mode
-          if ! grep -q "$search_string" "$file_path"; then
+          if ! grep -q "bindkey -v" "$HOME/.zshrc"; then
             echo "bindkey -v" >> $HOME/.zshrc
           fi
     - name: Configure Oh my Zsh (Linux)

@@ -7,6 +7,7 @@ ZSH_THEME="gnzh"
 bindkey -v
 ## Keybinds
 bindkey "^R" history-incremental-search-backward
+bindkey "^S" history-incremental-search-forward
 ## Make cursor thin in insert mode
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||

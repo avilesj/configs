@@ -19,6 +19,7 @@
               - ripgrep
               - kubectl
               - fd
+              - gnu-sed
             state: present
 
         - name: Ensure casks

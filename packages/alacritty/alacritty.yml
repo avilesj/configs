@@ -553,10 +553,10 @@ shell:
 # And optionally:
 #
 # - `mods` (see key bindings)
-#mouse_bindings:
-#  - { mouse: Right,                 action: ExpandSelection }
-#  - { mouse: Right,  mods: Control, action: ExpandSelection }
-#  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
+mouse_bindings:
+  - { mouse: Right, action: Copy }
+  # - { mouse: Right,  mods: Control, action: ExpandSelection }
+  # - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
 
 # Key bindings
 #
@@ -767,9 +767,12 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
-#- { key: Paste,                                       action: Paste          }
-#- { key: Copy,                                        action: Copy           }
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  # Mac OS
+  - { key: NumpadSubtract, mods: Command, action: DecreaseFontSize }
+  - { key: V, mods: Command, action: Paste }
 #- { key: L,         mods: Control,                    action: ClearLogNotice }
 #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
 #- { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp   }

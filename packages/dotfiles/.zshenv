@@ -2,7 +2,7 @@
 alias k=kubectl
 alias vim=nvim
 # ZSH
-ZSH_THEME="gnzh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 ## Vim mode
 bindkey -v
 ## Keybinds
@@ -36,3 +36,10 @@ export CONFIGS_PKGS_DIR=$HOME/Dev/configs/packages/
 export CONFIGS_DOTFILES_DIR=$HOME/Dev/configs/packages/dotfiles/
 export CONFIGS_NVIM_DIR=$HOME/Dev/configs/packages/nvim/
 export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
+
+
+# Work file
+if [ -e "~/.zshwork" ]; then
+  source ~/.zshwork
+fi
+

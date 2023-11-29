@@ -14,7 +14,7 @@
               - tree-sitter
               - wget
               - lazygit
-              - k0sctl
+              - k0sproject/tap/k0sctl
               - k9s
               - ripgrep
               - kubectl
@@ -27,7 +27,6 @@
             name:
               - dbeaver-community
               - docker
-              - emacs
               - firefox
               - font-source-code-pro
               - graphql-playground
@@ -65,6 +64,7 @@
         cmd: |
           if [ -z ${ZSH+x} ]; then 
             sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            zsh -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
             echo "True"
           fi
             echo "False"

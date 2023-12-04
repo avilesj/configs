@@ -47,7 +47,6 @@
           - neovim
           - python3-neovim
           - htop
-          - docker
           - docker.io
           - docker-compose
           - git

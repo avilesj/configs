@@ -8,7 +8,7 @@ configure-macos:
 	ansible-playbook configure_macos.yaml
 	ansible-playbook after_configure.yaml
 configure-fedora:
-	ansible-playbook configure_fedora.yaml
+	ansible-playbook configure_fedora.yaml --ask-become-pass
 	ansible-playbook after_configure.yaml
 save:
 	ansible-playbook save.yaml

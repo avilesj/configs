@@ -13,12 +13,4 @@
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          sudo chsh -s /bin/zsh $(whoami)
-    - name: Configure fd-find (Linux)
-      when: ansible_distribution == 'Fedora'
-      become: true
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          mkdir -p ~/.local/bin
-          ln -s $(which fdfind) ~/.local/bin/fd
+          sudo chsh -s $(which zsh) $(whoami)

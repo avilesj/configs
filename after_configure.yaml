@@ -1,0 +1,18 @@
+- name: Configure packages
+  hosts: localhost
+  tasks:
+    - name: Configure NVIM
+      ansible.builtin.copy:
+        src: ./packages/nvim
+        dest: $HOME/.config/
+    - name: Configure Alacritty
+      ansible.builtin.copy:
+        src: ./packages/alacritty
+        dest: $HOME/.config/
+    - name: Configure dotfiles
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: $HOME/
+      loop:
+        - ./packages/dotfiles/.zshenv
+        - ./packages/dotfiles/.tmux.conf

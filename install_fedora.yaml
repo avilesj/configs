@@ -28,6 +28,7 @@
           - fd-find
           - ripgrep
           - gcc
+          - kubernetes-client
           - cargo
           - nodejs
           - go

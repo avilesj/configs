@@ -1,0 +1,41 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Install MacOS packages
+      when: ansible_distribution == 'MacOSX'
+      block:
+        - name: Ensure Hombrew packages
+          community.general.homebrew:
+            name:
+              - nvim
+              - tmux
+              - tree-sitter
+              - wget
+              - lazygit
+              - k0sproject/tap/k0sctl
+              - k9s
+              - ripgrep
+              - yq
+              - jq
+              - kubectl
+              - fd
+              - gnu-sed
+            state: present
+
+        - name: Ensure casks
+          community.general.homebrew_cask:
+            name:
+              - dbeaver-community
+              - docker
+              - firefox
+              - font-source-code-pro
+              - graphql-playground
+              - karabiner-elements
+              - libreoffice
+              - logseq
+              - syncthing
+              - vlc
+              - vscodium
+              - alacritty
+              - wireshark
+            state: present

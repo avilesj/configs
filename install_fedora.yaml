@@ -1,0 +1,39 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Enable Lazygit Project
+      when: ansible_distribution == 'Fedora'
+      become: true
+      community.general.copr:
+        host: copr.fedorainfracloud.org
+        state: enabled
+        name: atim/lazygit
+        chroot: fedora-39-x86_64
+    - name: Ensure packages
+      when: ansible_distribution == 'Fedora'
+      become: yes
+      dnf:
+        name:
+          - neovim
+          - python3-neovim
+          - htop
+          - docker-compose
+          - git
+          - fzf
+          - g++
+          - zsh
+          - tmux
+          - lazygit
+          - alacritty
+          - fd-find
+          - ripgrep
+          - gcc
+          - cargo
+          - nodejs
+          - go
+        state: present
+    - name: Install Nerd Font
+      when: ansible_distribution == 'Fedora'
+      ansible.builtin.shell:
+        cmd: |
+          cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf && cd -

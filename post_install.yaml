@@ -1,0 +1,19 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Install oh my zsh
+      register: oh_my_zsh
+      changed_when: oh_my_zsh.stdout != "False"
+      ansible.builtin.shell:
+        cmd: |
+          if [ -z ${ZSH+x} ]; then 
+            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+            zsh -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+            echo "True"
+          fi
+            echo "False"
+    - name: TPM (Tmux)
+      ansible.builtin.shell:
+        cmd: |
+          rm -rf ~/.tmux
+          git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

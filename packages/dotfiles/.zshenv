@@ -39,7 +39,7 @@ export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
 
 
 # Work file
-if [ -e "~/.zshwork" ]; then
+if [ -e ~/.zshwork ]; then
   source ~/.zshwork
 fi
 

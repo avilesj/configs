@@ -2,7 +2,7 @@ return {
   {
     "f-person/git-blame.nvim",
     opts = {
-      enabled = false,
+      enabled = true,
     },
   },
 }

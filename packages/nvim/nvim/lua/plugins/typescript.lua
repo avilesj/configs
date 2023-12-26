@@ -2,9 +2,11 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      settings = {
-        typescript = {
+      servers = {
+        ---@type lspconfig.options.tsserver
+        tsserver = {
           root_dir = require("lspconfig.util").root_pattern("package.json"),
+          single_file_support = false,
         },
       },
     },

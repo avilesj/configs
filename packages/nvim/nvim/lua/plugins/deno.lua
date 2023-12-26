@@ -14,23 +14,25 @@ return {
     opts = {
       -- make sure mason installs the server
       servers = {
-        ---@type lspconfig.options.denols
-        setup = {
-          settings = {
-            root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
-            deno = {
-              enable = true,
-              suggest = {
-                autoImports = true,
-                names = true,
-                paths = true,
-                completeFunctionCalls = true,
-                imports = {
-                  autoDiscover = true,
-                  hosts = {
-                    ["https://crux.land"] = true,
-                    ["https://deno.land"] = true,
-                    ["https://x.nest.land"] = true,
+        denols = {
+          ---@type lspconfig.options.denols
+          setup = {
+            settings = {
+              root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
+              deno = {
+                enable = true,
+                suggest = {
+                  autoImports = true,
+                  names = true,
+                  paths = true,
+                  completeFunctionCalls = true,
+                  imports = {
+                    autoDiscover = true,
+                    hosts = {
+                      ["https://crux.land"] = true,
+                      ["https://deno.land"] = true,
+                      ["https://x.nest.land"] = true,
+                    },
                   },
                 },
               },

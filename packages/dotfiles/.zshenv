@@ -42,4 +42,5 @@ export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
 if [ -e ~/.zshwork ]; then
   source ~/.zshwork
 fi
-
+export DENO_INSTALL="/home/$(whoami)/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"

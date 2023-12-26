@@ -1,0 +1,18 @@
+- name: Delete configs
+  hosts: localhost
+  tasks:
+    - name: Delete NVIM
+      file:
+        path: $HOME/.config/nvim/
+        state: absent
+    - name: Delete Alacritty
+      file:
+        path: $HOME/.config/alacritty/
+        state: absent
+    - name: Delete dotfiles
+      file:
+        path: "$HOME/{{ item }}"
+        state: absent
+      loop:
+        - .zshenv
+        - .tmux.conf

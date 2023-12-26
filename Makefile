@@ -12,3 +12,6 @@ configure-fedora:
 	ansible-playbook after_configure.yaml
 save:
 	ansible-playbook save.yaml
+
+clean:
+	ansible-playbook clean.yaml

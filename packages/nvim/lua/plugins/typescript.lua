@@ -1,5 +1,17 @@
 return {
   {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ---@type lspconfig.options.tsserver
+        tsserver = {
+          root_dir = require("lspconfig.util").root_pattern("package.json"),
+          single_file_support = false,
+        },
+      },
+    },
+  },
+  {
     "mfussenegger/nvim-dap",
     opts = function()
       local dap = require("dap")

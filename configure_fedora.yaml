@@ -14,3 +14,27 @@
         cmd: |
           #/bin/bash
           sudo chsh -s $(which zsh) $(whoami)
+    - name: Disable SELinux for directory
+      when: ansible_distribution == 'Fedora'
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          chcon -Rt svirt_sandbox_file_t $HOME/Dev/
+    - name: Enable RPM Fusion
+      when: ansible_distribution == 'Fedora'
+      become: yes
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+          sudo dnf config-manager --enable fedora-cisco-openh264
+    - name: Configure codecs
+      when: ansible_distribution == 'Fedora'
+      become: yes
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
+          # AMD
+          sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
+          sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y

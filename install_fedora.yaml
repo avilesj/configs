@@ -17,7 +17,9 @@
           - neovim
           - python3-neovim
           - htop
-          - docker-compose
+          - podman-compose
+          - podman
+          - podman-docker
           - git
           - fzf
           - g++
@@ -32,6 +34,7 @@
           - cargo
           - nodejs
           - go
+          - elixir
         state: present
     - name: Install Nerd Font
       when: ansible_distribution == 'Fedora'

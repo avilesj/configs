@@ -1,10 +1,15 @@
 - name: Configure packages
   hosts: localhost
   tasks:
-    - name: Configure NVIM
-      ansible.builtin.copy:
-        src: ./packages/nvim
-        dest: $HOME/.config/
+    - block:
+        - name: Clean up NVIM
+          ansible.builtin.file:
+            state: absent
+            path: $HOME/.config/nvim
+        - name: Configure NVIM
+          ansible.builtin.copy:
+            src: ./packages/nvim
+            dest: $HOME/.config/
     - name: Configure Alacritty
       ansible.builtin.copy:
         src: ./packages/alacritty

@@ -35,6 +35,7 @@
           - nodejs
           - go
           - elixir
+          - erlang
         state: present
     - name: Install Nerd Font
       when: ansible_distribution == 'Fedora'

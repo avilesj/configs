@@ -66,10 +66,6 @@ multiplier = 3
 args = ["--login", "-c", "tmux"]
 program = "/bin/zsh"
 
-[vi_mode_cursor]
-cursor = "CellForeground"
-text = "CellBackground"
-
 [window]
 decorations = "full"
 startup_mode = "Fullscreen"

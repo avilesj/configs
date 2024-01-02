@@ -1,7 +1,7 @@
 # Aliases
 alias k=kubectl
 alias vim=nvim
-alias exit="tmux kill-server"
+alias exitt="tmux kill-server"
 # ZSH
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ## Vim mode

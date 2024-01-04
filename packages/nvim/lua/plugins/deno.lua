@@ -18,6 +18,7 @@ return {
           ---@type lspconfig.options.denols
           setup = {
             settings = {
+              single_file_support = false,
               root_dir = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc"),
               deno = {
                 enable = true,

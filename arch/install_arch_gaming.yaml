@@ -1,0 +1,19 @@
+- name: Install gaming packages
+  hosts: localhost
+  tasks:
+    - name: Ensure packages (Arch Linux)
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - steam
+        state: present
+          
+    - name: Install package from AUR using a Pacman compatible AUR helper
+      when: ansible_distribution == 'Archlinux'
+      community.general.pacman:
+        name:
+          - sunshine
+        state: present
+        executable: yay
+        extra_args: --builddir /var/cache/yay

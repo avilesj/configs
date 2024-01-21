@@ -1,0 +1,35 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Ensure packages (Arch Linux)
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - neovim
+          - python-neovim
+          - htop
+          - docker-compose
+          - docker
+          - git
+          - fzf
+          - base-devel
+          - zsh
+          - tmux
+          - lazygit
+          - alacritty
+          - fd
+          - ripgrep
+          - gcc
+          - kubectl
+          - cargo
+          - nodejs
+          - go
+          - mesa
+          - yay
+          - libva-mesa-driver
+          - mesa-vdpau
+          - libva-vdpau-driver
+          - libvdpau-va-gl
+          - ttf-jetbrains-mono-nerd
+        state: present

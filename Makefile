@@ -1,17 +1,17 @@
 install-macos:
-	ansible-playbook install_macos.yaml
+	ansible-playbook macos/install_macos.yaml
 	ansible-playbook post_install.yaml
 install-fedora:
-	ansible-playbook install_fedora.yaml --ask-become-pass
+	ansible-playbook fedora/install_fedora.yaml --ask-become-pass
 	ansible-playbook post_install.yaml
 configure-macos:
-	ansible-playbook configure_macos.yaml
+	ansible-playbook macos/configure_macos.yaml
 	ansible-playbook after_configure.yaml
 configure-fedora:
-	ansible-playbook configure_fedora.yaml --ask-become-pass
+	ansible-playbook fedora/configure_fedora.yaml --ask-become-pass
 	ansible-playbook after_configure.yaml
 post-install-fedora:
-	ansible-playbook post_install_fedora.yaml
+	ansible-playbook fedora/post_install_fedora.yaml
 install-fedora-full: install-fedora configure-fedora post-install-fedora
 save:
 	ansible-playbook save.yaml

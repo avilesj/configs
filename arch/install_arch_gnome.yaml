@@ -1,0 +1,24 @@
+- name: Install GNOME with Wayland and set it as default on Arch Linux
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Update package database
+      pacman:
+        update_cache: yes
+      register: update_result
+
+    - name: Install GNOME with Wayland
+      pacman:
+        name: 
+          - gnome
+          - gnome-extra
+          - gnome-shell-extensions
+        state: present
+      when: "'error: target not found' not in update_result.stdout"
+    - name: Start GDM (GNOME Display Manager) on boot
+      systemd:
+        name: gdm.service
+        enabled: yes
+
+    - name: Enable GDM on the current session
+      command: systemctl start gdm.service

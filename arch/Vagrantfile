@@ -1,0 +1,24 @@
+Vagrant.configure("2") do |config|
+  # Use the Arch Linux base box
+  config.vm.box = "archlinux/archlinux"
+
+  # Define the provider (VirtualBox, VMware, etc.)
+  config.vm.provider "virtualbox" do |vb|
+    vb.name = "arch_test"
+    vb.memory = "8192"  # Set the VM memory size
+    vb.cpus = 2         # Set the number of CPUs
+    vb.customize ["modifyvm", :id, "--vram", "128"]
+  end
+
+    # Configure network settings
+  config.vm.network "private_network", type: "dhcp"
+
+  # Shell provisioner (optional)
+  config.vm.provision "shell", inline: <<-SHELL
+    # Add any provisioning commands here
+    pacman -Syu --noconfirm  # Update packages
+    useradd -m -p "$(openssl passwd -1 'test')" -s /bin/bash arch
+    echo "arch ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/arch
+    pacman -S --noconfirm ansible
+  SHELL
+end

@@ -16,6 +16,6 @@ test-destroy:
 	$(VAGRANT_BIN) destroy -f
 
 install-core:
-	ansible-playbook install_arch_core.yaml
+	ansible-playbook install_arch_core.yaml --ask-become-pass
 install-gnome:
-	ansible-playbook install_arch_gnome.yaml
+	ansible-playbook install_arch_gnome.yaml --ask-become-pass

@@ -26,10 +26,13 @@
           - nodejs
           - go
           - mesa
-          - yay
+          - vi
+          - vim
           - libva-mesa-driver
           - mesa-vdpau
           - libva-vdpau-driver
           - libvdpau-va-gl
+          - wl-clipboard
           - ttf-jetbrains-mono-nerd
+          - openssh
         state: present

@@ -1,0 +1,18 @@
+- name: Configure packages
+  hosts: localhost
+  tasks:
+    - name: Create zshrc if it doesn't exists
+      command: touch $HOME/.zshrc
+      args:
+        creates: $HOME/.zshrc
+    - name: Configure Oh my Zsh (Linux)
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sed -i '/ZSH_THEME/d' $HOME/.zshrc
+    - name: Change shell to ZSH (Linux)
+      become: yes
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo chsh -s $(which zsh) $(whoami)

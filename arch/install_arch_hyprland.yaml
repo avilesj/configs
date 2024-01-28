@@ -1,0 +1,14 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Ensure packages (Arch Linux)
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - hyprland
+          - rofi
+          - polybar
+          - playerctl
+          - kitty
+        state: present

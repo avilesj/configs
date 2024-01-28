@@ -11,8 +11,10 @@
       pacman:
         name: 
           - gnome
-          - gnome-extra
           - gnome-shell-extensions
+          - gnome-browser-connector
+          - pacman-contrib
+          - gnome-terminal
         state: present
       when: "'error: target not found' not in update_result.stdout"
     - name: Start GDM (GNOME Display Manager) on boot

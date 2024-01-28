@@ -38,6 +38,7 @@ export CONFIGS_DOTFILES_DIR=$HOME/Dev/configs/packages/dotfiles/
 export CONFIGS_NVIM_DIR=$HOME/Dev/configs/packages/nvim/
 export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
 export CONFIGS_HYPRLAND_DIR=$HOME/Dev/configs/packages/hypr/
+export CONFIGS_WAYBAR_DIR=$HOME/Dev/configs/packages/waybar/
 
 
 # Work file

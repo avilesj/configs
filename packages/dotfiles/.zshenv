@@ -37,6 +37,7 @@ export CONFIGS_PKGS_DIR=$HOME/Dev/configs/packages/
 export CONFIGS_DOTFILES_DIR=$HOME/Dev/configs/packages/dotfiles/
 export CONFIGS_NVIM_DIR=$HOME/Dev/configs/packages/nvim/
 export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
+export CONFIGS_HYPRLAND_DIR=$HOME/Dev/configs/packages/hypr/
 
 
 # Work file
@@ -45,3 +46,22 @@ if [ -e ~/.zshwork ]; then
 fi
 export DENO_INSTALL="/home/$(whoami)/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+#copy paste
+#!/bin/bash
+
+# Function to check if the system is macOS
+is_mac_os() {
+    if [[ $(uname) == "Darwin" ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Example usage
+if ! is_mac_os; then
+    alias pbcopy=wl-copy
+    alias pbpaste=wl-paste
+fi
+
+

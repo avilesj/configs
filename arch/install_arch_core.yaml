@@ -35,4 +35,7 @@
           - wl-clipboard
           - ttf-jetbrains-mono-nerd
           - openssh
+          - noto-fonts-cjk
+          - ttf-font-awesome
+
         state: present

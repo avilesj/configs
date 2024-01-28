@@ -8,7 +8,8 @@
         name:
           - hyprland
           - rofi
-          - polybar
+          - waybar
           - playerctl
           - kitty
+          - hyprpaper
         state: present

@@ -20,6 +20,12 @@
           #/bin/bash
           cp -r $HOME/.config/hypr/* $CONFIGS_HYPRLAND_DIR/
           git add --ignore-errors $CONFIGS_HYPRLAND_DIR/
+    - name: Save Waybar
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          cp -r $HOME/.config/waybar/* $CONFIGS_WAYBAR_DIR/
+          git add --ignore-errors $CONFIGS_WAYBAR_DIR/
     - name: Dotfiles
       ansible.builtin.shell:
         cmd: |

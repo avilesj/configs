@@ -68,5 +68,4 @@ program = "/bin/zsh"
 
 [window]
 decorations = "full"
-# startup_mode = "Fullscreen"
-dimensions = { columns = 100, lines = 100}
+startup_mode = "Fullscreen"

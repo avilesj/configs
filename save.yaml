@@ -2,25 +2,6 @@
   hosts: localhost # You can replace 'localhost' with your target host or group
 
   tasks:
-    - name: Save nvim
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          cp -r $HOME/.config/nvim/* $CONFIGS_NVIM_DIR/
-          git add --ignore-errors $CONFIGS_NVIM_DIR/
-    - name: Save Alacritty
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          cp -r $HOME/.config/alacritty/* $CONFIGS_ALACRITTY_DIR/
-          git add --ignore-errors $CONFIGS_ALACRITTY_DIR/
-    - name: Dotfiles
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          cp $HOME/.zshenv $CONFIGS_DOTFILES_DIR/
-          cp $HOME/.tmux.conf $CONFIGS_DOTFILES_DIR/
-          git add $CONFIGS_DOTFILES_DIR/
     - name: Commit and push
       register: commit
       ansible.builtin.shell:

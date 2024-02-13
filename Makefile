@@ -19,6 +19,8 @@ configure-linux:
 	ansible-playbook post_install.yaml
 save:
 	ansible-playbook save.yaml
+update:
+	ansible-playbook update.yaml
 clean:
 	ansible-playbook clean.yaml
 	ansible-playbook clean-nvim.yaml

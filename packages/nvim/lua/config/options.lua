@@ -5,3 +5,5 @@
 local opt = vim.opt
 
 opt.ttimeoutlen = 50
+
+vim.filetype.add({ extension = { templ = "templ" } })

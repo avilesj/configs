@@ -4,4 +4,4 @@
 
 local opt = vim.opt
 
-opt.ttimeoutlen = 0.05
+opt.ttimeoutlen = 50

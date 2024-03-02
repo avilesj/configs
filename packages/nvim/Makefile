@@ -11,5 +11,8 @@ USERNAME=$(shell whoami)
 
 # Build the Docker image with the current user's UID and GID
 build:
+	docker volume create $(IMAGE_NAME)
 	docker build --build-arg USER_ID=$(USER_ID) --build-arg GROUP_ID=$(GROUP_ID) --build-arg USERNAME=$(USERNAME) -t $(IMAGE_NAME) .
+explore:
+	docker run -it $(IMAGE_NAME) /bin/bash
 .PHONY: build

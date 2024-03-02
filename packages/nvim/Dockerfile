@@ -1,9 +1,34 @@
 # Fedora 40
 FROM fedora:40
 # Accept UID and GID as build arguments
-ARG USER_ID
-ARG GROUP_ID
+ARG USER_ID=1000
+ARG GROUP_ID=1000
 ARG USERNAME
+
+RUN dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
+  dnf -y update
+
+#Lazygit
+RUN dnf install -y dnf-plugins-core
+RUN dnf copr enable atim/lazygit -y
+# Core
+RUN dnf install -y neovim \ 
+  python3-neovim \
+  git \
+  fzf \
+  g++ \
+  lazygit \
+  fd-find \
+  ripgrep \
+  gcc \
+  unzip \
+  kubernetes-client
+# Langs
+RUN dnf install -y cargo \
+  nodejs \
+  go 
+RUN cargo install deno --locked
 
 # Create a group and user
 RUN if getent group ${GROUP_ID} ; then \
@@ -16,33 +41,11 @@ RUN if getent group ${GROUP_ID} ; then \
   echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME}
 
 ENV HOME=/home/${USERNAME}
-RUN dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm && \
-  dnf -y update
-
-#Lazygit
-RUN dnf install -y dnf-plugins-core
-RUN dnf copr enable atim/lazygit -y
-RUN dnf install -y neovim \ 
-  python3-neovim \
-  htop \
-  git \
-  fzf \
-  g++ \
-  lazygit \
-  fd-find \
-  ripgrep \
-  gcc \
-  kubernetes-client \
-  cargo \
-  nodejs \
-  go \
-  elixir \
-  erlang
-
 WORKDIR /workspace
+USER ${USERNAME}
+COPY . /home/${USERNAME}/.config/nvim
+RUN sudo chown -R ${USER_ID}:${GROUP_ID} $HOME && \
+  sudo chmod -R 755 $HOME
 
-COPY . /home/javiles/.config/nvim
-USER javiles
 
 CMD ["nvim"]

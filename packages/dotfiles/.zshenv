@@ -1,4 +1,5 @@
 # Aliases
+alias vim=nvim
 alias k=kubectl
 alias exitt="tmux kill-server"
 # ZSH
@@ -93,5 +94,5 @@ function nvim-docker() {
 }
 
 # Export the function if necessary, depending on your shell
-alias vim="nvim-docker nvim"
+alias devvim="nvim-docker nvim"
 alias devenv="nvim-docker bash"

@@ -28,7 +28,6 @@ RUN dnf install -y neovim \
 RUN dnf install -y cargo \
   nodejs \
   go 
-RUN cargo install deno --locked
 
 # Create a group and user
 RUN if getent group ${GROUP_ID} ; then \
@@ -43,6 +42,9 @@ RUN if getent group ${GROUP_ID} ; then \
 ENV HOME=/home/${USERNAME}
 WORKDIR /workspace
 USER ${USERNAME}
+# Deno
+RUN curl -fsSL https://deno.land/install.sh | sh
+RUN echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
 COPY . /home/${USERNAME}/.config/nvim
 RUN sudo chown -R ${USER_ID}:${GROUP_ID} $HOME && \
   sudo chmod -R 755 $HOME

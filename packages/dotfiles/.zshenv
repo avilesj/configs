@@ -31,15 +31,15 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 #Vars
-export WORKSPACE=$HOME/Dev
+export WORKSPACE=$HOME/workspace
 export PATH=$HOME/.local/bin:$PATH #for fdfind
 export CONFIGS_DIR=$WORKSPACE/configs/
 export CONFIGS_PKGS_DIR=$WORKSPACE/configs/packages/
 export CONFIGS_DOTFILES_DIR=$WORKSPACE/configs/packages/dotfiles/
 export CONFIGS_NVIM_DIR=$WORKSPACE/configs/packages/nvim/
-export CONFIGS_ALACRITTY_DIR=$HOME/Dev/configs/packages/alacritty/
-export CONFIGS_HYPRLAND_DIR=$HOME/Dev/configs/packages/hypr/
-export CONFIGS_WAYBAR_DIR=$HOME/Dev/configs/packages/waybar/
+export CONFIGS_ALACRITTY_DIR=$WORKSPACE/configs/packages/alacritty/
+export CONFIGS_HYPRLAND_DIR=$WORKSPACE/configs/packages/hypr/
+export CONFIGS_WAYBAR_DIR=$WORKSPACE/configs/packages/waybar/
 
 
 # Work file

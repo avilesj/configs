@@ -6,7 +6,11 @@ local wk = require("which-key")
 
 wk.register({
   ["<leader>by"] = { name = "+yank" },
+  ["<leader>l"] = { name = "+lazy/leetcode" },
+  ["<leader>lc"] = { name = "+Leet" },
 })
+
+map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 map("n", "<leader>byp", function()
   -- Get the full path of the current file

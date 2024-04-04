@@ -12,8 +12,10 @@
               - tree-sitter
               - wget
               - lazygit
-              - k0sproject/tap/k0sctl
               - k9s
+              - cargo
+              - nodejs
+              - go
               - ripgrep
               - yq
               - jq

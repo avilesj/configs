@@ -1,0 +1,17 @@
+- name: Clean up NVIM -- config
+  ansible.builtin.file:
+    state: absent
+    path: $HOME/.config/nvim
+- name: Clean up NVIM -- local/share
+  ansible.builtin.file:
+    state: absent
+    path: $HOME/.local/share/nvim
+- name: Clean up NVIM -- cache
+  ansible.builtin.file:
+    state: absent
+    path: $HOME/.cache/nvim
+- name: Configure NVIM
+  ansible.builtin.copy:
+    src: .
+    dest: $HOME/.config/nvim
+

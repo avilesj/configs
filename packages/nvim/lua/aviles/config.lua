@@ -63,3 +63,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 vim.filetype.add({ extension = { templ = "templ" } })
+
+-- Theming
+local theme = "kanagawa-dragon"
+vim.cmd("colorscheme " .. theme)

@@ -46,8 +46,11 @@ export CONFIGS_WAYBAR_DIR=$WORKSPACE/configs/packages/waybar/
 if [ -e ~/.zshwork ]; then
   source ~/.zshwork
 fi
+# Deno
 export DENO_INSTALL="/home/$(whoami)/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+# Go
+export PATH="$HOME/go/bin:$PATH"
 #copy paste
 #!/bin/bash
 

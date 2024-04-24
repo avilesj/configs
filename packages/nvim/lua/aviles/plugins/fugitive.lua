@@ -42,13 +42,6 @@ return {
         desc = "Commit",
       },
       {
-        "<leader>gcr",
-        function()
-          vim.cmd.Git(string.format("commit -m %s", commit_message))
-        end,
-        desc = "Revert commit",
-      },
-      {
         "<leader>gcc",
         function()
           require("telescope.builtin").git_commits()
@@ -58,6 +51,9 @@ return {
       {
         "<leader>gcr",
         function()
+          local cursorPosition = vim.api.nvim_win_get_cursor(0)
+          cursorPosition[2] = 0
+          vim.api.nvim_win_set_cursor(0, cursorPosition)
           local hash = vim.fn.expand("<cword>")
           vim.cmd.Git(string.format("revert %s", hash))
         end,

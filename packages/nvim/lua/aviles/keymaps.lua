@@ -39,7 +39,7 @@ map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+map("n", "<leader><tab>", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>byp", function()
   -- Get the full path of the current file
   local current_file = vim.fn.expand("%:p")
@@ -79,10 +79,21 @@ end, { desc = "Copy full path" })
 -- Lazy
 map("n", "<leader>la", "<cmd>Lazy<cr>", { desc = "Lazy" })
 -- Git
-map("n", "<leader>gg", function()
-  vim.cmd("Git")
-  vim.cmd("only")
-end, { desc = "Git" })
+-- map("n", "<leader>gg", function()
+--   vim.cmd("Git")
+--   vim.cmd("only")
+-- end, { desc = "Git" })
+-- map("n", "<leader>gp", vim.cmd.Git({ args = { "pull" } }), { desc = "Git pull" })
+-- map("n", "<leader>gP", vim.cmd.Git({ args = { "push" } }), { desc = "Git push" })
+-- map("n", "<leader>gf", vim.cmd.Git({ args = { "fetch" } }), { desc = "Git fetch" })
+-- map("n", "<leader>gbn", function()
+--   local branch_name = vim.fn.input("New branch name: ")
+--   if string.len(branch_name) == 0 then
+--     vim.cmd.echo({ args = { "Invalid branch name" } })
+--     return
+--   end
+--   vim.cmd.Git({ args = { "checkout -b " .. branch_name } })
+-- end, { desc = "New branch" })
 -- Windows
 map("n", "<leader>ww", "<C-W>p", { desc = "Other Window", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })

@@ -7,7 +7,7 @@ return {
       local opts = require("lazy.core.plugin").values(plugin, "opts", false)
       local mappings = {
         { opts.mappings.add, desc = "Add Surrounding", mode = { "n", "v" } },
-        { opts.mappings.delete, desc = "Delete Surrounding" },
+        { opts.mappings.delete, desc = "Delete Surrounding", mode = { "n", "v" } },
         { opts.mappings.find, desc = "Find Right Surrounding" },
         { opts.mappings.find_left, desc = "Find Left Surrounding" },
         { opts.mappings.highlight, desc = "Highlight Surrounding" },

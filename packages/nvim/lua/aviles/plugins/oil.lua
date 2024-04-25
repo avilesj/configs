@@ -1,8 +1,8 @@
 return {
   {
     "stevearc/oil.nvim",
+    event = "Syntax",
     opts = {
-      default_file_explorer = true,
       keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",
@@ -27,7 +27,7 @@ return {
         "<leader>e",
         function()
           local oil = require("oil")
-          oil.open()
+          oil.open(".")
         end,
         desc = "Oil",
       },

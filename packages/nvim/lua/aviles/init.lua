@@ -1,9 +1,4 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
+require("aviles.pre-init")
 -- <LazyVim>
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -35,5 +30,6 @@ require("lazy").setup("aviles.plugins", {
 })
 -- </LazyVim>
 
+require("aviles.autocmds")
 require("aviles.config")
 require("aviles.keymaps")

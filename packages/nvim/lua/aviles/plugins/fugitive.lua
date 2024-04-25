@@ -74,12 +74,12 @@ return {
         desc = "Log - default",
       },
       {
-        "<leader>gs",
+        "<leader>gls",
         function()
           local query = vim.fn.input("Git grep search: ")
           vim.cmd.Ggrep(query)
         end,
-        desc = "Log",
+        desc = "Search",
       },
       {
         "<leader>gbn",

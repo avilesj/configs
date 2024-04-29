@@ -31,6 +31,7 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 #Vars
+export NVIM_CONFIG=$HOME/.config/nvim
 export WORKSPACE=$HOME/workspace
 export PATH=$HOME/.local/bin:$PATH #for fdfind
 export CONFIGS_DIR=$WORKSPACE/configs/

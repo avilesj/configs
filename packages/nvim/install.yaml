@@ -11,7 +11,6 @@
     state: absent
     path: $HOME/.cache/nvim
 - name: Configure NVIM
-  ansible.builtin.copy:
-    src: .
+  ansible.builtin.git:
+    repo: 'https://github.com/avilesj/nvim'
     dest: $HOME/.config/nvim
-

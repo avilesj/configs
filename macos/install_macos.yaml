@@ -13,7 +13,7 @@
               - wget
               - lazygit
               - k9s
-              - cargo
+              - rust
               - nodejs
               - go
               - ripgrep
@@ -22,6 +22,10 @@
               - kubectl
               - fd
               - gnu-sed
+              - stats
+              - clojure
+              - openjdk
+              - leiningen
             state: present
 
         - name: Ensure casks

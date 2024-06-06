@@ -1,5 +1,9 @@
+# PATH
+export PATH="/usr/local/opt/emacs-plus@29/bin/:$PATH"
+export PATH="$HOME/.config/emacs/bin/:$PATH"
 # Aliases
 alias vim=nvim
+alias e='emacsclient -nw --create-frame --alternate-editor=""'
 alias k=kubectl
 alias exitt="tmux kill-server"
 # ZSH

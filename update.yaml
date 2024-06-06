@@ -2,12 +2,6 @@
   hosts: localhost # You can replace 'localhost' with your target host or group
 
   tasks:
-    - name: Save nvim
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          cp -r $HOME/.config/nvim/* $CONFIGS_NVIM_DIR/
-          git add --ignore-errors $CONFIGS_NVIM_DIR/
     - name: Save Alacritty
       ansible.builtin.shell:
         cmd: |

@@ -1,25 +1,22 @@
 - name: Install packages
   hosts: localhost
+  become: yes
   tasks:
-    - name: Enable Lazygit Project
+    - name: Enable RPM Fusion
       when: ansible_distribution == 'Fedora'
-      become: true
-      community.general.copr:
-        host: copr.fedorainfracloud.org
-        state: enabled
-        name: atim/lazygit
-        chroot: fedora-39-x86_64
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+          sudo dnf config-manager --enable fedora-cisco-openh264
     - name: Ensure packages
       when: ansible_distribution == 'Fedora'
-      become: yes
       dnf:
         name:
           - neovim
           - python3-neovim
           - htop
-          - podman-compose
-          - podman
-          - podman-docker
+          - docker
           - git
           - fzf
           - g++
@@ -36,9 +33,5 @@
           - go
           - elixir
           - erlang
+          - steam 
         state: present
-    - name: Install Nerd Font
-      when: ansible_distribution == 'Fedora'
-      ansible.builtin.shell:
-        cmd: |
-          cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf && cd -

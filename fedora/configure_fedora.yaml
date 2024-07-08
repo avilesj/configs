@@ -1,33 +1,12 @@
 - name: Configure packages
   hosts: localhost
   tasks:
-    - name: Configure Oh my Zsh (Linux)
-      when: ansible_distribution == 'Fedora'
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sed -i '/ZSH_THEME/d' $HOME/.zshrc
-    - name: Change shell to ZSH (Linux)
-      when: ansible_distribution == 'Fedora'
-      become: yes
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sudo chsh -s $(which zsh) $(whoami)
     - name: Disable SELinux for directory
       when: ansible_distribution == 'Fedora'
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          chcon -Rt svirt_sandbox_file_t $HOME/Dev/
-    - name: Enable RPM Fusion
-      when: ansible_distribution == 'Fedora'
-      become: yes
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-          sudo dnf config-manager --enable fedora-cisco-openh264
+          chcon -Rt svirt_sandbox_file_t $HOME/workspace/
     - name: Configure codecs
       when: ansible_distribution == 'Fedora'
       become: yes

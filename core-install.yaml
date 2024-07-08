@@ -17,3 +17,12 @@
         cmd: |
           rm -rf ~/.tmux
           git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    - name: Create font directory
+      file:
+        path: $HOME/.local/share/fonts
+        state: directory
+
+    - name: Install Nerd Font
+      ansible.builtin.shell:
+        cmd: |
+          cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf && cd -

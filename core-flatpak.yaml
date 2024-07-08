@@ -1,0 +1,22 @@
+- name: Install Flatpaks
+  hosts: localhost
+  tasks:
+    - name: Add Flathub remote
+      become: true
+      ansible.builtin.shell:
+        cmd: |
+          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    - name: Flatpaks
+      community.general.flatpak:
+        name:
+          - com.discordapp.Discord
+          - org.freedesktop.Platform
+          - org.freedesktop.Platform.GL.default
+          - org.freedesktop.Platform.GL.default
+          - org.freedesktop.Platform.openh264
+          - org.kde.KStyle.Adwaita
+          - org.kde.Platform
+          - org.videolan.VLC
+          - sh.cider.Cider
+          - us.zoom.Zoom
+

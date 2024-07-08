@@ -19,4 +19,8 @@
           - org.videolan.VLC
           - sh.cider.Cider
           - us.zoom.Zoom
+          - io.dbeaver.DBeaverCommunity
+          - com.github.tchx84.Flatseal
+          - com.github.jeromerobert.pdfarranger
+          - org.mozilla.Thunderbird
 

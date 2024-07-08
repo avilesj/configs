@@ -34,4 +34,5 @@
           - elixir
           - erlang
           - steam 
+          - luarocks
         state: present

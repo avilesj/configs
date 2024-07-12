@@ -14,7 +14,7 @@ install-fedora:
 full-fedora: install-fedora core-install core-configure configure-fedora core-flatpak
 
 core-flatpak:
-	ansible-playbook core-flatpak.yaml
+	ansible-playbook core-flatpak.yaml --ask-become-pass
 
 core-install:
 	ansible-playbook core-install.yaml

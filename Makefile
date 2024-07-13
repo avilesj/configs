@@ -16,11 +16,14 @@ full-fedora: install-fedora core-install core-configure configure-fedora core-fl
 core-flatpak:
 	ansible-playbook core-flatpak.yaml --ask-become-pass
 
+core-laptop:
+	ansible-playbook core-laptop.yaml --ask-become-pass
+
 core-install:
 	ansible-playbook core-install.yaml
 
 core-configure:
-	ansible-playbook core-configure.yaml
+	ansible-playbook core-configure.yaml --ask-become-pass
 save:
 	ansible-playbook save.yaml
 update:

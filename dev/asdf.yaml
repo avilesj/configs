@@ -1,0 +1,77 @@
+- name: Install asdf for Bash and Zsh
+  hosts: localhost
+  vars:
+    asdf_version: v0.14.0
+    asdf_user: "{{ ansible_user_id }}"
+
+  tasks:
+    - name: Install dependencies
+      become: yes
+      package:
+        name:
+          - git
+          - curl
+        state: present
+
+    - name: Check if ASDF is installed.
+      stat:
+        path: "/home/{{ asdf_user }}/.asdf"
+      register: bashrc
+
+    - name: Clone asdf repository
+      when: bashrc.stat.exists == False
+      git:
+        repo: https://github.com/asdf-vm/asdf.git
+        version: "{{ asdf_version }}"
+        dest: "/home/{{ asdf_user }}/.asdf"
+      become_user: "{{ asdf_user }}"
+
+    - name: Check if bashrc exists.
+      stat:
+        path: "/home/{{ asdf_user }}/.bashrc"
+      register: bashrc
+
+    - name: Add asdf to Bash
+      when: bashrc.stat.exists
+      lineinfile:
+        path: "/home/{{ asdf_user }}/.bashrc"
+        line: ". $HOME/.asdf/asdf.sh"
+        state: present
+      become_user: "{{ asdf_user }}"
+
+    - name: Add asdf completions to Bash
+      when: bashrc.stat.exists
+      lineinfile:
+        path: "/home/{{ asdf_user }}/.bashrc"
+        line: ". $HOME/.asdf/completions/asdf.bash"
+        state: present
+      become_user: "{{ asdf_user }}"
+
+    - name: Check if zshrc exists.
+      stat:
+        path: "/home/{{ asdf_user }}/.zshrc"
+      register: zshrc
+
+    - name: Add asdf to Zsh
+      when: zshrc.stat.exists
+      lineinfile:
+        path: "/home/{{ asdf_user }}/.zshrc"
+        line: ". $HOME/.asdf/asdf.sh"
+        state: present
+      become_user: "{{ asdf_user }}"
+
+    - name: Add asdf completions to Zsh
+      when: zshrc.stat.exists
+      lineinfile:
+        path: "/home/{{ asdf_user }}/.zshrc"
+        line: "fpath=(${ASDF_DIR}/completions $fpath)"
+        state: present
+      become_user: "{{ asdf_user }}"
+
+    - name: Ensure Zsh autocompletion is enabled
+      when: zshrc.stat.exists
+      lineinfile:
+        path: "/home/{{ asdf_user }}/.zshrc"
+        line: "autoload -Uz compinit && compinit"
+        state: present
+      become_user: "{{ asdf_user }}"

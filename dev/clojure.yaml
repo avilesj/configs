@@ -1,8 +1,15 @@
+- name: Installing ASDF
+  import_playbook: asdf.yaml
+
 - name: Install Clojure
   hosts: localhost
-  become: yes
+  vars:
+    asdf_clojure_version: 1.11.3.1463
+    asdf_openjdk_version: 21
+    asdf_lein_version: 2.11.2
   tasks:
     - name: ASDF Plugin Dependencies
+      become: yes
       when: ansible_distribution == 'Fedora'
       dnf:
         name:
@@ -13,54 +20,38 @@
 
     - name: ASDF Add Java Plugin
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf plugin-add java https://github.com/halcyon/asdf-java.git
+        cmd: asdf plugin-add java https://github.com/halcyon/asdf-java.git
 
-    - name: ASDF Install OpenJDK-21
+    - name: ASDF Install OpenJDK-{{ asdf_openjdk_version }}
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          asdf install java openjdk-21
+          asdf install java openjdk-{{ asdf_openjdk_version }}
 
-    - name: ASDF Configure OpenJDK-21
+    - name: ASDF Configure OpenJDK-{{ asdf_openjdk_version }}
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf global java openjdk-21
+        cmd: asdf global java openjdk-{{ asdf_openjdk_version }}
 
     - name: ASDF Add Lein Plugin
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf plugin-add lein https://codeberg.org/malice/asdf-lein.git
+        cmd: asdf plugin-add lein https://codeberg.org/malice/asdf-lein.git
 
-    - name: ASDF Install Lein
+    - name: ASDF Install Lein {{ asdf_lein_version }}
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf install lein 2.11.2
+        cmd: asdf install lein {{ asdf_lein_version }}
 
-    - name: ASDF Configure Lein
+    - name: ASDF Configure Lein {{ asdf_lein_version }}
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf global lein 2.11.2
+        cmd: asdf global lein {{ asdf_lein_version }}
 
     - name: ASDF Add Clojure Plugin
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf plugin-add clojure https://github.com/asdf-community/asdf-clojure.git
+        cmd: asdf plugin-add clojure https://github.com/asdf-community/asdf-clojure.git
 
-    - name: ASDF Install Clojure 1.11.3.1463
+    - name: ASDF Install Clojure {{ asdf_clojure_version }}
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf install clojure 1.11.3.1463
+        cmd: asdf install clojure {{ asdf_clojure_version }}
 
     - name: ASDF Configure Clojure
       ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          asdf global clojure 1.11.3.1463
+        cmd: asdf global clojure {{ asdf_clojure_version }}

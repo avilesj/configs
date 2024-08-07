@@ -71,3 +71,20 @@
           when:
             - zsh_path.rc == 0
             - current_shell.stdout != zsh_path.stdout
+
+    - name: Disable SELinux for directory
+      when: ansible_distribution == 'Fedora'
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          chcon -Rt svirt_sandbox_file_t $HOME/workspace/
+    - name: Configure codecs
+      when: ansible_distribution == 'Fedora'
+      become: yes
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
+          # AMD
+          sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
+          sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y

@@ -3,43 +3,10 @@
   tasks:
     - name: Install MacOS packages
       when: ansible_distribution == 'MacOSX'
-      block:
-        - name: Ensure Hombrew packages
-          community.general.homebrew:
-            name:
-              - nvim
-              - tmux
-              - tree-sitter
-              - wget
-              - k9s
-              - rust
-              - nodejs
-              - luarocks
-              - ripgrep
-              - yq
-              - jq
-              - kubectl
-              - fd
-              - gnu-sed
-              - stats
-            state: present
-
-        - name: Ensure casks
-          community.general.homebrew_cask:
-            name:
-              - dbeaver-community
-              - docker
-              - firefox
-              - font-source-code-pro
-              - font-jetbrains-mono-nerd-font
-              - karabiner-elements
-              - libreoffice
-              - syncthing
-              - vlc
-              - vscodium
-              - alacritty
-            state: present
-
+      import_tasks: systems/macos.yaml
+    - name: Install Fedora packages
+      when: ansible_distribution == 'Fedora'
+      import_tasks: systems/fedora.yaml
     - name: Install Oh My Zsh
       block:
         - name: Check if Oh My Zsh is installed

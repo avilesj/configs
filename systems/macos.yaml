@@ -1,0 +1,36 @@
+- name: Ensure Hombrew packages
+  community.general.homebrew:
+    name:
+      - nvim
+      - tmux
+      - tree-sitter
+      - wget
+      - k9s
+      - rust
+      - nodejs
+      - luarocks
+      - ripgrep
+      - yq
+      - jq
+      - kubectl
+      - fd
+      - gnu-sed
+      - stats
+    state: present
+
+- name: Ensure casks
+  community.general.homebrew_cask:
+    name:
+      - dbeaver-community
+      - docker
+      - 1password
+      - firefox
+      - font-source-code-pro
+      - font-jetbrains-mono-nerd-font
+      - karabiner-elements
+      - libreoffice
+      - syncthing
+      - vlc
+      - vscodium
+      - alacritty
+    state: present

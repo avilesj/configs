@@ -1,20 +1,22 @@
 - name: Install Flatpaks
   hosts: localhost
   tasks:
-    - name: Add Flathub remote
-      become: true
-      ansible.builtin.shell:
-        cmd: |
-          flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     - name: Flatpaks
-      community.general.flatpak:
-        name:
-          - com.discordapp.Discord
-          - org.videolan.VLC
-          - sh.cider.Cider
-          - us.zoom.Zoom
-          - io.dbeaver.DBeaverCommunity
-          - com.github.tchx84.Flatseal
-          - com.github.jeromerobert.pdfarranger
-          - org.mozilla.Thunderbird
-
+      when: ansible_distribution != 'MacOSX'
+      block:
+        - name: Add Flathub remote
+          become: true
+          ansible.builtin.shell:
+            cmd: |
+              flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+        - name: Flatpaks
+          community.general.flatpak:
+            name:
+              - com.discordapp.Discord
+              - org.videolan.VLC
+              - sh.cider.Cider
+              - us.zoom.Zoom
+              - io.dbeaver.DBeaverCommunity
+              - com.github.tchx84.Flatseal
+              - com.github.jeromerobert.pdfarranger
+              - org.mozilla.Thunderbird

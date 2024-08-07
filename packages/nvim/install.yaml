@@ -12,5 +12,5 @@
     path: $HOME/.cache/nvim
 - name: Configure NVIM
   ansible.builtin.git:
-    repo: 'https://github.com/avilesj/nvim'
+    repo: "git@github.com:avilesj/nvim"
     dest: $HOME/.config/nvim

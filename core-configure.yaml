@@ -1,31 +1,73 @@
-- name: Configure packages
+- name: Configure system
   hosts: localhost
   tasks:
-    - name: Create zshrc if it doesn't exists
-      command: touch $HOME/.zshrc
-      args:
-        creates: $HOME/.zshrc
-    - name: Configure Oh my Zsh (Linux)
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sed -i '/ZSH_THEME/d' $HOME/.zshrc
-    - name: Change shell to ZSH (Linux)
-      become: yes
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sudo chsh -s $(which zsh) $(whoami)
+    - name: TMUX/TPM config
+      block:
+        - name: Check if Tmux is installed
+          register: tmux_installed
+          stat:
+            path: "{{ ansible_env.HOME }}/.tmux.conf"
+        - name: Configure Tmux
+          when: not tmux_installed.stat.exists
+          import_tasks: packages/tmux/install.yaml
+        - name: Check if TPM is installed
+          register: tpm_installed
+          stat:
+            path: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
+        - name: TPM (Tmux)
+          when: not tpm_installed.stat.exists
+          ansible.builtin.shell:
+            cmd: |
+              rm -rf ~/.tmux
+              git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
     - name: Configure Neovim
-      import_tasks: packages/nvim/install.yaml
+      block:
+        - name: Check if NVIM is configured
+          register: nvim_configured
+          stat:
+            path: "{{ ansible_env.HOME }}/.config/nvim/"
+        - name: Configure Neovim
+          when: not nvim_configured.stat.exists
+          import_tasks: packages/nvim/install.yaml
     - name: Configure Alacritty
-      ansible.builtin.copy:
-        src: ./packages/alacritty
-        dest: $HOME/.config/
-    - name: Configure dotfiles
-      ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: $HOME/
-      loop:
-        - ./packages/dotfiles/.zshenv
-        - ./packages/dotfiles/.tmux.conf
+      block:
+        - name: Check if Alacritty is configured
+          register: alacritty_configured
+          stat:
+            path: "{{ ansible_env.HOME }}/.config/alacritty/"
+        - name: Configure Alacritty
+          when: not alacritty_configured.stat.exists
+          ansible.builtin.copy:
+            src: ./packages/alacritty
+            dest: $HOME/.config/
+    - name: Configure ZSH env file
+      block:
+        - name: Check if ZSH env is configured
+          register: zshenv_configured
+          stat:
+            path: "{{ ansible_env.HOME }}/.zshenv"
+        - name: Configure ZSH env
+          when: not zshenv_configured.stat.exists
+          import_tasks: packages/zshenv/install.yaml
+
+    - name: Change shell to ZSH
+      when: ansible_distribution != 'MacOSX'
+      block:
+        - name: Check if Zsh is installed
+          command: which zsh
+          register: zsh_path
+          changed_when: false
+          failed_when: false
+        - name: Get current shell
+          command: echo $SHELL
+          register: current_shell
+          changed_when: false
+        - name: Set Zsh as default shell
+          become: yes
+          user:
+            name: "{{ ansible_user_id }}"
+            shell: "{{ zsh_path.stdout }}"
+          when:
+            - zsh_path.rc == 0
+            - current_shell.stdout != zsh_path.stdout

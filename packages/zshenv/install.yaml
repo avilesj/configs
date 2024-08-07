@@ -1,0 +1,91 @@
+- name: Ensure .zshenv exists
+  file:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    state: touch
+    mode: "0644"
+
+- name: Add PATH exports
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    line: "{{ item }}"
+  loop:
+    - "export PATH=$HOME/bin:$PATH"
+    - "export PATH=$HOME/.local/bin:$PATH"
+    - "export PATH=/usr/local/opt/emacs-plus@29/bin/:$PATH"
+    - "export PATH=$HOME/.config/emacs/bin/:$PATH"
+    - "export PATH=$HOME/.local/bin:$PATH #for fdfind"
+
+- name: Add environment variables
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    block: |
+      export NVIM_CONFIG=$HOME/.config/nvim
+      export WORKSPACE=$HOME/workspace
+      export CONFIGS_DIR=$WORKSPACE/configs/
+      export CONFIGS_PKGS_DIR=$WORKSPACE/configs/packages/
+      export CONFIGS_DOTFILES_DIR=$WORKSPACE/configs/packages/dotfiles/
+      export CONFIGS_NVIM_DIR=$WORKSPACE/configs/packages/nvim/
+      export CONFIGS_ALACRITTY_DIR=$WORKSPACE/configs/packages/alacritty/
+      export CONFIGS_HYPRLAND_DIR=$WORKSPACE/configs/packages/hypr/
+      export CONFIGS_WAYBAR_DIR=$WORKSPACE/configs/packages/waybar/
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - ENV VARS"
+
+- name: Add aliases
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    block: |
+      alias vim=nvim
+      alias e='emacsclient -nw --create-frame --alternate-editor=""'
+      alias k=kubectl
+      alias exitt="tmux kill-server"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - ALIASES"
+
+- name: Add custom functions
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    block: |
+      is_mac_os() {
+          if [[ $(uname) == "Darwin" ]]; then
+              return 0
+          else
+              return 1
+          fi
+      }
+      function zle-keymap-select {
+        if [[ ${KEYMAP} == vicmd ]] ||
+           [[ $1 = 'block' ]]; then
+          echo -ne '\e[1 q'
+        elif [[ ${KEYMAP} == main ]] ||
+             [[ ${KEYMAP} == viins ]] ||
+             [[ ${KEYMAP} = '' ]] ||
+             [[ $1 = 'beam' ]]; then
+          echo -ne '\e[5 q'
+        fi
+      }
+      zle-line-init() {
+          zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+          echo -ne "\e[5 q"
+      }
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - FUNCTIONS"
+
+- name: Add statements
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    block: |
+      ZSH_THEME="powerlevel10k/powerlevel10k"
+      if ! is_mac_os; then
+          alias pbcopy=wl-copy
+          alias pbpaste=wl-paste
+      fi
+      if [ -e ~/.zshwork ]; then
+        source ~/.zshwork
+      fi
+      bindkey -v
+      ## Keybinds
+      bindkey "^R" history-incremental-search-backward
+      bindkey "^S" history-incremental-search-forward
+      zle -N zle-keymap-select
+      zle -N zle-line-init
+      echo -ne '\e[5 q' # Use beam shape cursor on startup.
+      preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - STATEMENTS"

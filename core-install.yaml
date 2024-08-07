@@ -1,28 +1,69 @@
 - name: Install packages
   hosts: localhost
   tasks:
-    - name: Install oh my zsh
-      register: oh_my_zsh
-      changed_when: oh_my_zsh.stdout != "False"
-      ansible.builtin.shell:
-        cmd: |
-          if [ -z ${ZSH+x} ]; then 
-            sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-            zsh -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
-            echo "True"
-          fi
-            echo "False"
-    - name: TPM (Tmux)
-      ansible.builtin.shell:
-        cmd: |
-          rm -rf ~/.tmux
-          git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    - name: Create font directory
-      file:
-        path: $HOME/.local/share/fonts
-        state: directory
+    - name: Install MacOS packages
+      when: ansible_distribution == 'MacOSX'
+      block:
+        - name: Ensure Hombrew packages
+          community.general.homebrew:
+            name:
+              - nvim
+              - tmux
+              - tree-sitter
+              - wget
+              - k9s
+              - rust
+              - nodejs
+              - luarocks
+              - ripgrep
+              - yq
+              - jq
+              - kubectl
+              - fd
+              - gnu-sed
+              - stats
+            state: present
 
-    - name: Install Nerd Font
-      ansible.builtin.shell:
-        cmd: |
-          cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf && cd -
+        - name: Ensure casks
+          community.general.homebrew_cask:
+            name:
+              - dbeaver-community
+              - docker
+              - firefox
+              - font-source-code-pro
+              - font-jetbrains-mono-nerd-font
+              - karabiner-elements
+              - libreoffice
+              - syncthing
+              - vlc
+              - vscodium
+              - alacritty
+            state: present
+
+    - name: Install Oh My Zsh
+      block:
+        - name: Check if Oh My Zsh is installed
+          register: oh_my_zsh_installed
+          stat:
+            path: "{{ ansible_env.HOME }}/.oh-my-zsh"
+
+        - name: Download Oh My Zsh
+          when: not oh_my_zsh_installed.stat.exists
+          ansible.builtin.shell:
+            cmd: |
+              sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+              zsh -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+
+    - name: Install Fonts
+      when: ansible_distribution != 'MacOSX'
+      block:
+        - name: Create font directory
+          file:
+            path: $HOME/.local/share/fonts
+            state: directory
+
+        - name: Install Nerd Font
+          when: ansible_distribution != 'MacOSX'
+          ansible.builtin.shell:
+            cmd: |
+              cd ~/.local/share/fonts && curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf && cd -

@@ -1,4 +1,6 @@
 install-asdf:
 	ansible-playbook asdf.yaml --ask-become-pass
-install-clojure:
+clojure:
 	ansible-playbook clojure.yaml --ask-become-pass
+go:
+	ansible-playbook go.yaml

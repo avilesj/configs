@@ -20,6 +20,7 @@
       - fd-find
       - ripgrep
       - openssl
+      - openssl-devel
       - gcc
       - kubernetes-client
       - cargo

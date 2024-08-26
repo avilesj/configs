@@ -19,6 +19,7 @@
       - alacritty
       - fd-find
       - ripgrep
+      - openssl
       - gcc
       - kubernetes-client
       - cargo

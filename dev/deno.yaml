@@ -1,0 +1,21 @@
+- name: Installing ASDF
+  import_playbook: asdf.yaml
+
+- name: Install deno
+  hosts: localhost
+  vars:
+    asdf_deno_version: 1.46.1
+  tasks:
+    - name: ASDF Add deno Plugin
+      ansible.builtin.shell:
+        cmd: asdf plugin-add deno https://github.com/asdf-community/asdf-deno.git
+
+    - name: ASDF Install deno-{{ asdf_deno_version }}
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          asdf install deno {{ asdf_deno_version }}
+
+    - name: ASDF Configure deno-{{ asdf_deno_version }}
+      ansible.builtin.shell:
+        cmd: asdf global deno {{ asdf_deno_version }}

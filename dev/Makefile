@@ -6,3 +6,5 @@ go:
 	ansible-playbook go.yaml
 elixir:
 	ansible-playbook elixir.yaml --ask-become-pass
+deno:
+	ansible-playbook deno.yaml --ask-become-pass

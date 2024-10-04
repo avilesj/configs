@@ -1,0 +1,10 @@
+ctrl - w : yabai -m display --focus 1
+ctrl - q : yabai -m display --focus 3
+ctrl - e : yabai -m display --focus 2
+ctrl - 1 : yabai -m query --windows | jq '.[] | select(.app == "Alacritty") | .id' | xargs -I {} yabai -m window --focus {}
+ctrl - 2 : yabai -m query --windows | jq '.[] | select((.app == "Google Chrome") and (.title | startswith("Starts with Title") | not)) | .id' | xargs -I {} yabai -m window --focus {}
+ctrl - 3 : yabai -m query --windows | jq '.[] | select(.app == "Slack") | .id' | xargs -I {} yabai -m window --focus {}
+ctrl - 4 : yabai -m query --windows | jq '.[] | select(.app == "Logseq") | .id' | xargs -I {} yabai -m window --focus {}
+ctrl - 5 : yabai -m query --windows | jq '.[] | select(.title | startswith("Starts With Title")) | .id' | xargs -I {} yabai -m window --focus {}
+ctrl - 0 : yabai -m query --windows | jq '.[] | select(.app == "Music") | .id' | xargs -I {} yabai -m window --focus {}
+

@@ -7,7 +7,7 @@ core-laptop:
 	ansible-playbook core-laptop.yaml --ask-become-pass
 
 core-install:
-	ansible-playbook core-install.yaml
+	ansible-playbook core-install.yaml --ask-become-pass
 
 core-configure:
 	ansible-playbook core-configure.yaml --ask-become-pass

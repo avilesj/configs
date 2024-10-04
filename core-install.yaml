@@ -7,6 +7,10 @@
     - name: Install Fedora packages
       when: ansible_distribution == 'Fedora'
       import_tasks: systems/fedora.yaml
+    - name: Install PopOS packages
+      when: ansible_distribution == 'Pop!_OS'
+      become: true
+      import_tasks: systems/popos.yaml
     - name: Install Oh My Zsh
       block:
         - name: Check if Oh My Zsh is installed

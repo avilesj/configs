@@ -12,6 +12,8 @@
       - java
       - python
       - nodejs
+      - kubectl
+      - argocd
 
   tasks:
     - name: Install ASDF dependencies

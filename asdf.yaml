@@ -3,6 +3,15 @@
   vars:
     asdf_version: v0.14.0
     asdf_user: "{{ ansible_user_id }}"
+    plugins:
+      - k9s
+      - golang
+      - elixir
+      - deno
+      - clojure
+      - java
+      - python
+      - nodejs
 
   tasks:
     - name: Install ASDF dependencies
@@ -69,3 +78,20 @@
         line: "autoload -Uz compinit && compinit"
         state: present
       become_user: "{{ asdf_user }}"
+
+    - name: Add asdf plugins if not already present
+      shell: "asdf plugin add {{ item }}"
+      loop: "{{ plugins }}"
+
+    - name: Check Golang.
+      stat:
+        path: $HOME/.asdf/plugins/golang/
+      register: golang
+    - name: Configure ZSH for GOROOT
+      when: golang.stat.exists == True
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshenv"
+        line: "{{ item }}"
+        state: present
+      loop:
+        - ". ~/.asdf/plugins/golang/set-env.zsh"

@@ -1,7 +1,0 @@
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-sudo yabai --load-sa
-yabai -m rule --add app="^Logseq$" display=3 native-fullscreen=on sticky=on
-yabai -m rule --add app="^Google Chrome$" display=2 native-fullscreen=on manage=off
-yabai -m rule --add app="^Slack$" display=2 native-fullscreen=on manage=off
-yabai -m rule --add title="^Alacritty$" display=1 native-fullscreen=on manage=off
-

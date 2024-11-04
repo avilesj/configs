@@ -1,0 +1,7 @@
+- name: Configure system package
+  hosts: localhost
+  vars:
+    package: "{{ pkg }}"
+  tasks:
+    - name: Install {{ package }}
+      import_tasks: packages/{{ package }}/install.yaml

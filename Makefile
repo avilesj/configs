@@ -12,6 +12,9 @@ install:
 configure:
 	ansible-playbook configure.yaml --ask-become-pass
 
+package:
+	ansible-playbook package.yaml --extra-vars "package=$(pkg)"
+
 asdf:
 	ansible-playbook asdf.yaml --ask-become-pass
 save:

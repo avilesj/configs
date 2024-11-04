@@ -18,7 +18,7 @@
 
 - name: "Add config"
   blockinfile:
-    path: "{{ ansible_env.HOME }}/.config/skhd/skhd"
+    path: "{{ ansible_env.HOME }}/.config/skhd/skhdrc"
     block: |
       ctrl - w : yabai -m display --focus 1
       ctrl - q : yabai -m display --focus 3

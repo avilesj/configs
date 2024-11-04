@@ -5,14 +5,13 @@
       - tmux
       - tree-sitter
       - wget
-      - k9s
       - rust
-      - nodejs
       - luarocks
       - ripgrep
       - yq
       - jq
-      - kubectl
+      - koekeishiya/formulae/yabai
+      - koekeishiya/formulae/skhd
       - fd
       - gnu-sed
       - stats

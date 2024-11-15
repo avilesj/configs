@@ -1,0 +1,23 @@
+- name: Ensure packages
+  apt:
+    name:
+      - htop
+      - docker.io
+      - git
+      - fzf
+      - build-essential
+      - yq
+      - jq
+      - zsh
+      - tmux
+      - alacritty
+      - fd-find
+      - ripgrep
+      - openssl
+      - libssl-dev
+      - gcc
+      - cargo
+      - steam
+      - luarocks
+    state: present
+

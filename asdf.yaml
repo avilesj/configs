@@ -14,6 +14,12 @@
       - nodejs
       - kubectl
       - argocd
+      - terraform
+      - terragrunt
+      - neovim
+      - ruby
+      - dart
+      - flutter
 
   tasks:
     - name: Install ASDF dependencies

@@ -11,6 +11,10 @@
       when: ansible_distribution == 'Pop!_OS'
       become: true
       import_tasks: systems/popos.yaml
+    - name: Install Ubuntu packages
+      when: ansible_distribution == 'Ubuntu'
+      become: true
+      import_tasks: systems/ubuntu.yaml
     - name: Install Oh My Zsh
       block:
         - name: Check if Oh My Zsh is installed

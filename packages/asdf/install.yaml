@@ -1,0 +1,13 @@
+- name: Ensure .tool-versions exists
+  file:
+    path: "{{ ansible_env.HOME }}/.tool-versions"
+    state: touch
+    mode: "0644"
+
+- name: Add global versions
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.tool-versions"
+    line: "{{ item }}"
+  loop:
+    - "neovim 0.10.2"
+    - "nodejs 22.11.0"

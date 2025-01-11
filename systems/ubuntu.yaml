@@ -1,6 +1,8 @@
 - name: Ensure packages
   apt:
     name:
+      - neovim
+      - python3-neovim
       - htop
       - docker.io
       - git
@@ -10,14 +12,12 @@
       - jq
       - zsh
       - tmux
-      - alacritty
       - fd-find
       - ripgrep
       - openssl
       - libssl-dev
       - gcc
       - cargo
-      - steam
       - luarocks
     state: present
 

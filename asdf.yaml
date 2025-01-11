@@ -11,6 +11,7 @@
       - clojure
       - java
       - python
+      - erlang
       - nodejs
       - kubectl
       - argocd
@@ -90,6 +91,22 @@
     - name: Add asdf plugins if not already present
       shell: "asdf plugin add {{ item }}"
       loop: "{{ plugins }}"
+
+    - name: Ensure .tool-versions exists
+      file:
+        path: "{{ ansible_env.HOME }}/.tool-versions"
+        state: touch
+        mode: "0644"
+    
+    - name: Add global versions
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.tool-versions"
+        line: "{{ item }}"
+      loop:
+        - "neovim 0.10.3"
+        - "nodejs 22.11.0"
+        - "erlang 27.2"
+        - "elixir 1.18.1"
 
     - name: Check Golang.
       stat:

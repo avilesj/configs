@@ -1,7 +1,6 @@
 - name: Ensure packages
   apt:
     name:
-      - neovim
       - python3-neovim
       - htop
       - docker.io
@@ -19,5 +18,8 @@
       - gcc
       - cargo
       - luarocks
+      - wl-clipboard
+      - curl
+      - alacritty
     state: present
 

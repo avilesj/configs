@@ -88,3 +88,13 @@
           # AMD
           sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
           sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
+
+    - name: Add global versions
+      lineinfile:
+        path: "{{ ansible_env.HOME }}/.tool-versions"
+        line: "{{ item }}"
+      loop:
+        - "neovim 0.10.3"
+        - "nodejs 22.11.0"
+        - "erlang 27.2"
+        - "elixir 1.18.1"

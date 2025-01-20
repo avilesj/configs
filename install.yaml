@@ -28,6 +28,19 @@
             cmd: |
               sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
               zsh -c "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    - name: Install Mise
+      block:
+        - name: Check if Mise is installed
+          register: mise_installed
+          stat:
+            path: "{{ ansible_env.HOME }}/.local/bin/mise"
+
+        - name: Download Mise
+          when: not mise_installed.stat.exists
+          ansible.builtin.shell:
+            cmd: |
+              curl https://mise.run | sh
+              $HOME/.local/bin/mise activate zsh >> $HOME/.zshrc
 
     - name: Install Fonts
       when: ansible_distribution != 'MacOSX'

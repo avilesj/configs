@@ -1,5 +1,3 @@
-full: core-install core-configure core-flatpak
-
 flatpak:
 	ansible-playbook flatpak.yaml --ask-become-pass
 
@@ -15,8 +13,6 @@ configure:
 package:
 	ansible-playbook package.yaml --extra-vars "package=$(pkg)"
 
-asdf:
-	ansible-playbook asdf.yaml --ask-become-pass
 save:
 	ansible-playbook save.yaml
 update:

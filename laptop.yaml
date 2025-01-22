@@ -6,7 +6,7 @@
       when: ansible_distribution == 'Fedora'
       dnf:
         name:
-          - tlp 
+          - tlp
           - tlp-rdw
         state: present
     - name: Enable in systemd
@@ -14,5 +14,5 @@
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          systemctl enable tlp.service
+          systemctl enable --now tlp.service
           systemctl mask systemd-rfkill.service systemd-rfkill.socket

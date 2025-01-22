@@ -97,6 +97,20 @@
         - "python 3.12.0"
         - "rust 1.84.0"
         - "cargo 0.85.0"
+
+    - name: Add current user to docker group
+      become: true
+      user:
+        name: "{{ lookup('env', 'USER') }}" # Retrieves the current user from the environment
+        groups: docker
+        append: yes
+    - name: Enable systemd services
+      become: true
+      when: ansible_distribution != 'MacOSX'
+      ansible.builtin.shell:
+        cmd: |
+          #/bin/bash
+          sudo systemctl enable --now docker.service
     - name: Ensure Git user.name and user.email are configured
       block:
         - name: Check if Git user.name is set

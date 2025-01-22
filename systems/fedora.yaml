@@ -1,4 +1,9 @@
+- name: Check if RPM Fusion free repository is installed
+  command: dnf repolist
+  register: rpmfusion_free
+  changed_when: false
 - name: Enable RPM Fusion
+  when: "'rpmfusion-free' not in rpmfusion_free.stdout"
   ansible.builtin.shell:
     cmd: |
       #/bin/bash
@@ -7,27 +12,59 @@
 - name: Ensure packages
   dnf:
     name:
-      - neovim
+      - dnf-plugins-core
       - python3-neovim
       - htop
       - docker
       - git
       - fzf
-      - g++
+      - "@development-tools"
+      - "@development-libs"
+      - yq
+      - jq
       - zsh
       - tmux
-      - alacritty
       - fd-find
       - ripgrep
       - openssl
-      - openssl-devel
+      - openssl-devel 
       - gcc
-      - kubernetes-client
-      - cargo
-      - nodejs
-      - go
-      - elixir
-      - erlang
-      - steam
       - luarocks
+      - wl-clipboard
+      - curl
+      - alacritty
+      - inotify-tools
+      - ncurses-devel  
+    state: present
+- name: Disable SELinux for directory
+  ansible.builtin.shell:
+    cmd: |
+      #/bin/bash
+      chcon -Rt svirt_sandbox_file_t {{ ansible_user_dir }}/workspace/
+- name: Configure codecs
+  ansible.builtin.shell:
+    cmd: |
+      #/bin/bash
+      sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
+      # AMD
+      sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
+      sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
+- name: Configure extra repositories
+  ansible.builtin.shell:
+    cmd: |
+      #/bin/bash
+      # 1Password
+      sudo rpm --import https://downloads.1password.com/linux/keys/1password.asc
+      sudo sh -c 'echo -e "[1password]\nname=1Password Stable Channel\nbaseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
+      # Docker
+      sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+- name: Ensure extra packages
+  dnf:
+    name:
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io 
+      - docker-buildx-plugin 
+      - docker-compose-plugin
+      - 1password
     state: present

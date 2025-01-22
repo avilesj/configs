@@ -1,5 +1,13 @@
 - name: Configure system
   hosts: localhost
+  vars_prompt:
+    - name: git_user_name
+      prompt: "Enter your Git user.name"
+      private: no # Set to 'yes' if you want the input to be hidden (e.g., for passwords)
+
+    - name: git_user_email
+      prompt: "Enter your Git user.email"
+      private: no
   tasks:
     - name: TMUX/TPM config
       block:
@@ -72,23 +80,11 @@
             - zsh_path.rc == 0
             - current_shell.stdout != zsh_path.stdout
 
-    - name: Disable SELinux for directory
-      when: ansible_distribution == 'Fedora'
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          chcon -Rt svirt_sandbox_file_t $HOME/workspace/
-    - name: Configure codecs
-      when: ansible_distribution == 'Fedora'
-      become: yes
-      ansible.builtin.shell:
-        cmd: |
-          #/bin/bash
-          sudo dnf swap ffmpeg-free ffmpeg --allowerasing -y
-          # AMD
-          sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld -y
-          sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld -y
-
+    - name: Ensure .tool-versions
+      file:
+        path: "{{ ansible_env.HOME }}/.tool-versions"
+        state: touch
+        mode: "0644"
     - name: Add global versions
       lineinfile:
         path: "{{ ansible_env.HOME }}/.tool-versions"
@@ -101,3 +97,18 @@
         - "python 3.12.0"
         - "rust 1.84.0"
         - "cargo 0.85.0"
+    - name: Ensure Git user.name and user.email are configured
+      block:
+        - name: Check if Git user.name is set
+          command: git config --global user.name
+          changed_when: false
+          failed_when: false
+          register: git_user_name_check
+
+        - name: Set Git user.name if not set
+          ansible.builtin.shell:
+            cmd: |
+              #/bin/bash
+              git config --global user.name "{{ git_user_name }}"
+              git config --global user.email "{{ git_user_email }}"
+          when: git_user_name_check.rc == 1

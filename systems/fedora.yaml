@@ -8,14 +8,12 @@
     cmd: |
       #/bin/bash
       dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
-      dnf config-manager --enable fedora-cisco-openh264
 - name: Ensure packages
   dnf:
     name:
       - dnf-plugins-core
       - python3-neovim
       - htop
-      - docker
       - git
       - fzf
       - "@development-tools"
@@ -28,13 +26,17 @@
       - ripgrep
       - openssl
       - openssl-devel 
+      - go
       - gcc
+      - g++
       - luarocks
       - wl-clipboard
       - curl
       - alacritty
       - inotify-tools
-      - ncurses-devel  
+      - ncurses-devel
+      - gstreamer1-plugin-openh264
+      - mozilla-openh264
     state: present
 - name: Disable SELinux for directory
   ansible.builtin.shell:
@@ -68,3 +70,4 @@
       - docker-compose-plugin
       - 1password
     state: present
+    allowerasing: true

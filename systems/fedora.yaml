@@ -25,7 +25,7 @@
       - fd-find
       - ripgrep
       - openssl
-      - openssl-devel 
+      - openssl-devel
       - go
       - gcc
       - g++
@@ -63,11 +63,22 @@
 - name: Ensure extra packages
   dnf:
     name:
-      - docker-ce 
-      - docker-ce-cli 
-      - containerd.io 
-      - docker-buildx-plugin 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
       - docker-compose-plugin
       - 1password
     state: present
     allowerasing: true
+- name: Checking desktop
+  shell: echo $XDG_CURRENT_DESKTOP
+  register: desktop_env
+- name: Ensure GNOME packages
+  when: desktop_env.stdout == 'GNOME'
+  dnf:
+    state: present
+    allowerasing: true
+    name:
+      - gnome-tweaks
+      - gnome-extensions

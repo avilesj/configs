@@ -28,7 +28,6 @@
             cmd: |
               rm -rf ~/.tmux
               git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
     - name: Configure Neovim
       block:
         - name: Check if NVIM is configured
@@ -38,17 +37,6 @@
         - name: Configure Neovim
           when: not nvim_configured.stat.exists
           import_tasks: packages/nvim/install.yaml
-    - name: Configure Alacritty
-      block:
-        - name: Check if Alacritty is configured
-          register: alacritty_configured
-          stat:
-            path: "{{ ansible_env.HOME }}/.config/alacritty/"
-        - name: Configure Alacritty
-          when: not alacritty_configured.stat.exists
-          ansible.builtin.copy:
-            src: ./packages/alacritty
-            dest: $HOME/.config/
     - name: Configure ZSH env file
       block:
         - name: Check if ZSH env is configured

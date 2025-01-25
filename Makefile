@@ -9,6 +9,7 @@ install:
 
 configure:
 	ansible-playbook configure.yaml --ask-become-pass
+	$(MAKE) package pkg="alacritty"
 
 package:
 	ansible-playbook package.yaml --extra-vars "pkg=$(pkg)"

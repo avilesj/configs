@@ -1,0 +1,4 @@
+- name: Copy the file
+  copy:
+    src: packages/alacritty/alacritty.toml
+    dest: "{{ ansible_env.HOME }}/.config/alacritty"

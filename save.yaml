@@ -3,5 +3,5 @@
   vars:
     pkg: "{{ pkg }}"
   tasks:
-    - name: Install {{ pkg }}
-      import_tasks: packages/{{ pkg }}/install.yaml
+    - name: Save {{ pkg }}
+      import_tasks: packages/{{ pkg }}/save.yaml

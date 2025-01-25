@@ -11,9 +11,9 @@ configure:
 	ansible-playbook configure.yaml --ask-become-pass
 
 package:
-	ansible-playbook package.yaml --extra-vars "package=$(pkg)"
+	ansible-playbook package.yaml --extra-vars "pkg=$(pkg)"
 
 save:
-	ansible-playbook save.yaml
+	ansible-playbook save.yaml --extra-vars "pkg=$(pkg)"
 update:
 	ansible-playbook update.yaml

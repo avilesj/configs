@@ -16,6 +16,10 @@
       when: ansible_distribution == 'Ubuntu'
       become: true
       import_tasks: systems/ubuntu.yaml
+    - name: Install Debian packages
+      when: ansible_distribution == 'Debian'
+      become: true
+      import_tasks: systems/debian.yaml
     - name: Install Oh My Zsh
       block:
         - name: Check if Oh My Zsh is installed

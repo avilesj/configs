@@ -23,3 +23,44 @@
       - alacritty
       - inotify-tools
     state: present
+- name: Add 1Password GPG key to keyring
+  shell: |
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+  args:
+    creates: /usr/share/keyrings/1password-archive-keyring.gpg
+
+- name: Add 1Password apt repository
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main"
+    filename: "1password"
+    state: present
+
+- name: Create debsig policies directory
+  file:
+    path: /etc/debsig/policies/AC2D62742012EA22
+    state: directory
+    mode: "0755"
+
+- name: Download 1Password debsig policy
+  get_url:
+    url: https://downloads.1password.com/linux/debian/debsig/1password.pol
+    dest: /etc/debsig/policies/AC2D62742012EA22/1password.pol
+    mode: "0644"
+
+- name: Create debsig keyrings directory
+  file:
+    path: /usr/share/debsig/keyrings/AC2D62742012EA22
+    state: directory
+    mode: "0755"
+
+- name: Add 1Password GPG key for debsig verification
+  shell: |
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --dearmor --output /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+  args:
+    creates: /usr/share/debsig/keyrings/AC2D62742012EA22/debsig.gpg
+
+- name: Update apt cache and install 1Password
+  apt:
+    name: 1password
+    state: present
+    update_cache: yes

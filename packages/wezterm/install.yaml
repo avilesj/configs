@@ -1,0 +1,19 @@
+- name: Check if wezterm is installed
+  register: package
+  stat:
+    path: "{{ ansible_env.HOME }}/wezterm/wezterm.lua"
+- name: Configure wezterm
+  when: not package.stat.exists
+  block:
+    - name: Ensure the destination directory exists
+      file:
+        path: "{{ ansible_env.HOME }}/.config/wezterm"
+        state: directory
+    - name: Copy the file
+      copy:
+        src: packages/wezterm/wezterm.lua
+        dest: "{{ ansible_env.HOME }}/.config/wezterm"
+    - name: Copy bg
+      copy:
+        src: packages/wezterm/bg.png
+        dest: "{{ ansible_env.HOME }}/.config/wezterm"

@@ -5,4 +5,4 @@
 - name: Copy bg
   copy:
     dest: packages/wezterm/bg.png
-    src: "{{ ansible_env.HOME }}/.config/wezterm/pg.png"
+    src: "{{ ansible_env.HOME }}/.config/wezterm/bg.png"

@@ -77,7 +77,7 @@ config.background = {
 }
 
 -- or, changing the font size and color scheme.
-config.font_size = 22
+config.font_size = 18
 config.color_scheme = "AdventureTime"
 -- timeout_milliseconds defaults to 1000 and can be omitted
 config.leader = {key = "`", timeout_milliseconds = 1000}
@@ -195,6 +195,27 @@ config.keys = {
     key = "DownArrow",
     mods = "LEADER",
     action = wezterm.action.AdjustPaneSize({ "Down", 5 }),
+  },
+}
+config.key_tables = {
+copy_mode = {
+
+    { key = "p",      mods = "NONE",  action = wezterm.action.CopyMode("EditPattern") },
+   { key = '/', mods = 'NONE', action = wezterm.action.Search{ CaseSensitiveString = '' } },
+    { key = '?', mods = 'NONE', action = wezterm.action.Search{ CaseSensitiveString = '' } },
+    { key = 'n', mods = 'NONE', action = wezterm.action.CopyMode 'NextMatch' },
+    { key = 'N', mods = 'NONE', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'N', mods = 'SHIFT', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'Escape', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
+
+  },
+ search_mode = {
+    { key = 'Enter', mods = 'NONE', action = wezterm.action.ActivateCopyMode },
+    { key = 'Escape', mods = 'NONE', action = wezterm.action.CopyMode 'Close' },
+    { key = 'n', mods = 'CTRL', action = wezterm.action.CopyMode 'NextMatch' },
+    { key = 'p', mods = 'CTRL', action = wezterm.action.CopyMode 'PriorMatch' },
+    { key = 'r', mods = 'CTRL', action = wezterm.action.CopyMode 'CycleMatchType' },
+    { key = 'u', mods = 'CTRL', action = wezterm.action.CopyMode 'ClearPattern' },
   },
 }
 config.status_update_interval = 2000

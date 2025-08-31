@@ -78,7 +78,7 @@
         path: "{{ ansible_env.HOME }}/.tool-versions"
         line: "{{ item }}"
       loop:
-        - "neovim 0.10.3"
+        - "neovim 0.11.3"
         - "nodejs 22.11.0"
         - "erlang 27.2"
         - "elixir 1.18.1"

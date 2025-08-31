@@ -12,6 +12,7 @@
       - zsh
       - tmux
       - fd-find
+      - pandoc
       - ripgrep
       - openssl
       - libssl-dev

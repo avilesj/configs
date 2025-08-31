@@ -4,13 +4,16 @@
     - name: Flatpaks
       when: ansible_distribution != 'MacOSX'
       block:
-        - name: Add Flathub remote
-          become: true
-          ansible.builtin.shell:
-            cmd: |
-              flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+        - name: Add the flathub flatpak repository remote to the user installation
+          community.general.flatpak_remote:
+            name: flathub
+            state: present
+            flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+            method: user
         - name: Flatpaks
           community.general.flatpak:
+            state: present
+            method: user
             name:
               - com.discordapp.Discord
               - org.videolan.VLC

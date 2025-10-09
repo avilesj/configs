@@ -9,25 +9,6 @@
       prompt: "Enter your Git user.email"
       private: no
   tasks:
-    - name: TMUX/TPM config
-      block:
-        - name: Check if Tmux is installed
-          register: tmux_installed
-          stat:
-            path: "{{ ansible_env.HOME }}/.tmux.conf"
-        - name: Configure Tmux
-          when: not tmux_installed.stat.exists
-          import_tasks: packages/tmux/install.yaml
-        - name: Check if TPM is installed
-          register: tpm_installed
-          stat:
-            path: "{{ ansible_env.HOME }}/.tmux/plugins/tpm"
-        - name: TPM (Tmux)
-          when: not tpm_installed.stat.exists
-          ansible.builtin.shell:
-            cmd: |
-              rm -rf ~/.tmux
-              git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
     - name: Configure Neovim
       block:
         - name: Check if NVIM is configured
@@ -98,7 +79,7 @@
       ansible.builtin.shell:
         cmd: |
           #/bin/bash
-          sudo systemctl enable --now docker.service
+          systemctl enable --now docker.service
     - name: Ensure Git user.name and user.email are configured
       block:
         - name: Check if Git user.name is set

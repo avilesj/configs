@@ -16,6 +16,10 @@
       when: ansible_distribution == 'Ubuntu'
       become: true
       import_tasks: systems/ubuntu.yaml
+    - name: Install Ubuntu packages
+      when: ansible_distribution == 'Archlinux'
+      become: true
+      import_tasks: systems/arch.yaml
     - name: Install Debian packages
       when: ansible_distribution == 'Debian'
       become: true

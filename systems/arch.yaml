@@ -1,94 +1,120 @@
-- name: Install packages
-  hosts: localhost
-  tasks:
-    - name: Ensure packages Arch - Core
-      when: ansible_distribution == 'Archlinux'
-      become: yes
-      pacman:
-        name:
-          - htop
-          - docker-compose
-          - docker
-          - git
-          - fzf
-          - base-devel
-          - zsh
-          - wezterm
-          - fd
-          - yay
-          - ripgrep
-          - gcc
-          - vi
-          - vim
-          - wl-clipboard
-          - ttf-jetbrains-mono-nerd
-          - openssh
-          - flatpak
-          - noto-fonts-cjk
-          - ttf-font-awesome
-        state: present
+- name: Configure multilib
+  become: yes
+  blockinfile:
+    path: "/etc/pacman.conf"
+    block: |
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
-    - name: Ensure packages Arch - Video
-      when: ansible_distribution == 'Archlinux'
+- name: Add user 'builder'
+  become: yes
+  block:
+    - name: Add user 'builder'
+      ansible.builtin.user:
+        name: builder
+        state: present
+        shell: /bin/bash
+        create_home: yes
+    - name: Create /etc/sudoers.d/builder if it doesn't exist
+      ansible.builtin.file:
+        path: /etc/sudoers.d/builder
+        state: touch
+    - name: Configure builder user
       become: yes
-      pacman:
-        name:
-          - mesa
-          - libva-mesa-driver
-          - mesa-vdpau
-          - libva-vdpau-driver
-          - libvdpau-va-gl
-        state: present
+      blockinfile:
+        path: "/etc/sudoers.d/builder"
+        block: |
+          builder ALL=(ALL) NOPASSWD: /usr/bin/pacman, /usr/bin/makepkg
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
 
-    - name: Ensure packages Arch - KDE
-      when: ansible_distribution == 'Archlinux'
-      become: yes
-      pacman:
-        name:
-          - plasma
-        state: present
+- name: Update database
+  become: yes
+  ansible.builtin.shell: pacman -Sy
 
-    - name: Ensure packages Arch - Desktop apps
-      when: ansible_distribution == 'Archlinux'
-      become: yes
-      pacman:
-        name:
-          - firefox
-          - virtualbox
-          - virtualbox-host-modules-arch
-        state: present
+- name: Ensure packages Arch - Core
+  become: yes
+  pacman:
+    name:
+      - htop
+      - docker-compose
+      - docker
+      - git
+      - fzf
+      - base-devel
+      - go
+      - zsh
+      - zip
+      - unzip
+      - wezterm
+      - fd
+      - ripgrep
+      - gcc
+      - vi
+      - vim
+      - wl-clipboard
+      - ttf-jetbrains-mono-nerd
+      - pandoc
+      - openssh
+      - flatpak
+      - noto-fonts-cjk
+      - otf-font-awesome
+    state: present
 
+- name: Ensure packages Arch - Video
+  become: yes
+  pacman:
+    name:
+      - mesa
+      - libva
+      - mesa-vdpau
+      - libvdpau-va-gl
+    state: present
 
-    - name: Ensure packages Arch - Recording/Editing
-      when: ansible_distribution == 'Archlinux'
-      become: yes
-      pacman:
-        name:
-          - kdenlive
-          - obs-studio
-        state: present
+- name: Ensure packages Arch - Desktop apps
+  become: yes
+  pacman:
+    name:
+      - firefox
+      - virtualbox
+      - virtualbox-host-modules-arch
+    state: present
 
-    - name: Ensure packages Arch - Gaming
-      when: ansible_distribution == 'Archlinux'
-      become: yes
-      pacman:
-        name:
-          - steam
-        state: present
-          
-    - name: Install AUR packages
-      when: ansible_distribution == 'Archlinux'
-      community.general.pacman:
-        name:
-          - sunshine
-          - 1password
-          - discord
-          - google-chrome
-          - zoom
-          - bottles
-          - protonup-qt
-          - protontricks
-          - vagrant
-        state: present
-        executable: yay
-        extra_args: --builddir /var/cache/yay
+- name: Ensure packages Arch - Recording/Editing
+  become: yes
+  pacman:
+    name:
+      - kdenlive
+      - obs-studio
+    state: present
+
+- name: Ensure packages Arch - Gaming
+  become: yes
+  pacman:
+    name:
+      - steam
+    state: present
+
+- name: Check install packages
+  ansible.builtin.command: pacman -Qm
+  register: installed_packages
+
+- name: "Install package"
+  become: yes
+  become_user: builder
+  ansible.builtin.shell: |
+    rm -rf /tmp/{{ item }}
+    git clone https://aur.archlinux.org/{{ item }}.git /tmp/{{ item }}
+    cd /tmp/{{ item }}
+    makepkg -S --noconfirm
+    makepkg -si --noconfirm
+    #pkg=$(makepkg --packagelist)
+    #sudo pacman -U $pkg
+  when: item not in installed_packages.stdout
+  with_items:
+    - sunshine
+    - 1password
+    - google-chrome
+    - zoom
+    - yay
+    - vagrant

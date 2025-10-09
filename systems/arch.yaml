@@ -1,0 +1,94 @@
+- name: Install packages
+  hosts: localhost
+  tasks:
+    - name: Ensure packages Arch - Core
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - htop
+          - docker-compose
+          - docker
+          - git
+          - fzf
+          - base-devel
+          - zsh
+          - wezterm
+          - fd
+          - yay
+          - ripgrep
+          - gcc
+          - vi
+          - vim
+          - wl-clipboard
+          - ttf-jetbrains-mono-nerd
+          - openssh
+          - flatpak
+          - noto-fonts-cjk
+          - ttf-font-awesome
+        state: present
+
+    - name: Ensure packages Arch - Video
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - mesa
+          - libva-mesa-driver
+          - mesa-vdpau
+          - libva-vdpau-driver
+          - libvdpau-va-gl
+        state: present
+
+    - name: Ensure packages Arch - KDE
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - plasma
+        state: present
+
+    - name: Ensure packages Arch - Desktop apps
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - firefox
+          - virtualbox
+          - virtualbox-host-modules-arch
+        state: present
+
+
+    - name: Ensure packages Arch - Recording/Editing
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - kdenlive
+          - obs-studio
+        state: present
+
+    - name: Ensure packages Arch - Gaming
+      when: ansible_distribution == 'Archlinux'
+      become: yes
+      pacman:
+        name:
+          - steam
+        state: present
+          
+    - name: Install AUR packages
+      when: ansible_distribution == 'Archlinux'
+      community.general.pacman:
+        name:
+          - sunshine
+          - 1password
+          - discord
+          - google-chrome
+          - zoom
+          - bottles
+          - protonup-qt
+          - protontricks
+          - vagrant
+        state: present
+        executable: yay
+        extra_args: --builddir /var/cache/yay

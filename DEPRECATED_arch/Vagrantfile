@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   # Use the Arch Linux base box
-  config.vm.box = "archlinux/archlinux"
+  config.vm.box = "generic/arch"
 
   # Define the provider (VirtualBox, VMware, etc.)
   config.vm.provider "virtualbox" do |vb|

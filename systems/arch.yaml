@@ -67,7 +67,6 @@
     name:
       - mesa
       - libva
-      - mesa-vdpau
       - libvdpau-va-gl
     state: present
 
@@ -97,7 +96,14 @@
 
 - name: Check install packages
   ansible.builtin.command: pacman -Qm
+  ignore_errors: true
   register: installed_packages
+
+- name: "Get 1Password GPG"
+  become: yes
+  become_user: builder
+  ansible.builtin.shell: |
+    curl -sS https://downloads.1password.com/linux/keys/1password.asc | gpg --import
 
 - name: "Install package"
   become: yes
@@ -112,7 +118,7 @@
     #sudo pacman -U $pkg
   when: item not in installed_packages.stdout
   with_items:
-    - sunshine
+    - sunshine-bin
     - 1password
     - google-chrome
     - zoom

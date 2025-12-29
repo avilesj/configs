@@ -1,0 +1,17 @@
+- name: Add touchpad configuration
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.configs/kcminputrc"
+    block: |
+      [Libinput][1267][12693][ELAN0676:00 04F3:3195 Touchpad]
+      # This is for Thinkpad
+      NaturalScroll=true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - KDE"
+
+- name: Add keyboard configuration
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.configs/kxkbrc"
+    block: |
+      [Layout]
+      Options=caps:escape
+      ResetOldOptions=true
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - KDE"

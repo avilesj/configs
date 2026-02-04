@@ -37,19 +37,14 @@
   pacman:
     name:
       - htop
-      - docker-compose
-      - docker
-      - git
       - fzf
       - base-devel
-      - go
       - zsh
       - zip
       - unzip
       - wezterm
       - fd
       - ripgrep
-      - gcc
       - vi
       - vim
       - wl-clipboard
@@ -59,6 +54,19 @@
       - flatpak
       - noto-fonts-cjk
       - otf-font-awesome
+    state: present
+
+- name: Ensure packages Arch - Dev
+  become: yes
+  pacman:
+    name:
+      - go
+      - gcc
+      - docker-compose
+      - docker
+      - git
+      - fennel
+      - luarocks
     state: present
 
 - name: Ensure packages Arch - Video
@@ -85,6 +93,13 @@
     name:
       - kdenlive
       - obs-studio
+    state: present
+
+- name: Ensure packages Arch - General
+  become: yes
+  pacman:
+    name:
+      - syncthing
     state: present
 
 - name: Ensure packages Arch - Gaming

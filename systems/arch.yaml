@@ -38,6 +38,7 @@
     name:
       - htop
       - fzf
+      - fuse2
       - base-devel
       - zsh
       - zip
